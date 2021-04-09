@@ -86,6 +86,21 @@ public class DataManager : MonoBehaviour
         Debug.Log("修改 " + json);
     }
 
+    public void DeleteItemData(int itemID, string itemContent, bool itemStatus)
+    {
+        for(int i = 0; i < allItem.items.Count; i++)
+        {
+            // 找到相同 ID 的事项数据
+            if (allItem.items[i].itemID == itemID)
+            {
+                allItem.items.Remove(allItem.items[i]);
+            }
+        }
+
+        json = JsonUtility.ToJson(allItem);
+        Debug.Log("删除 " + json);
+    }
+
     #endregion
 }
 

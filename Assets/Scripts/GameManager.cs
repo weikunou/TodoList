@@ -131,6 +131,13 @@ public class GameManager : MonoBehaviour
             }
         });
 
+        Button deleteButton = item.transform.Find("DeleteButton").GetComponent<Button>();
+        deleteButton.onClick.AddListener(delegate
+        {
+            DataManager.instance.DeleteItemData(id, itemText.text, false);
+            Destroy(item);
+        });
+
         count++;
         countText.text = $"今天 {count} 件事";
 
