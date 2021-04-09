@@ -16,20 +16,27 @@ public class GameManager : MonoBehaviour
     [Header("按钮")]
     public Button addItemButton;
 
+    /// <summary>
+    /// 已完成按钮
+    /// </summary>
+    public Button finishedButton;
 
     /// <summary>
     /// 文本输入框
     /// </summary>
+    [Header("输入框")]
     public InputField inputField;
 
     /// <summary>
     /// 滚动视图的内容
     /// </summary>
+    [Header("滚动视图")]
     public GameObject content;
 
     /// <summary>
     /// 事项预制体
     /// </summary>
+    [Header("预制体资源")]
     public GameObject itemPrefab;
 
     #endregion
@@ -57,8 +64,21 @@ public class GameManager : MonoBehaviour
     void AddItem()
     {
         GameObject item = Instantiate(itemPrefab, content.transform);
-        Text itemText = item.transform.Find("Text").GetComponent<Text>();
+        item.transform.SetAsFirstSibling();
+
+        Text itemText = item.transform.Find("Toggle/Label").GetComponent<Text>();
         itemText.text = inputField.text;
+
+        Toggle toggleButton = item.transform.Find("Toggle").GetComponent<Toggle>();
+        toggleButton.onValueChanged.AddListener(delegate { FinishItem(item); });
+    }
+
+    /// <summary>
+    /// 完成事项
+    /// </summary>
+    void FinishItem(GameObject item)
+    {
+        item.transform.SetSiblingIndex(finishedButton.transform.GetSiblingIndex() + 1);
     }
 
     #endregion
