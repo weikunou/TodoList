@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 /// <summary>
 /// 数据管理器类
@@ -23,6 +24,8 @@ public class DataManager : MonoBehaviour
     /// </summary>
     string json;
 
+    string path;
+
     #region 生命周期函数
 
     void Awake()
@@ -39,7 +42,9 @@ public class DataManager : MonoBehaviour
 
     void Start()
     {
-
+        path = Application.streamingAssetsPath + "/Data.json";
+        ReadJson();
+        TransformToAllItem();
     }
 
     void Update()
@@ -54,6 +59,9 @@ public class DataManager : MonoBehaviour
     /// <summary>
     /// 添加事项数据
     /// </summary>
+    /// <param name="itemID">事项 ID</param>
+    /// <param name="itemContent">事项 内容</param>
+    /// <param name="itemStatus">事项 状态</param>
     public void AddItemData(int itemID, string itemContent, bool itemStatus)
     {
         Item itemData = new Item();
@@ -65,11 +73,15 @@ public class DataManager : MonoBehaviour
 
         json = JsonUtility.ToJson(allItem);
         Debug.Log("添加 " + json);
+        WriteJson();
     }
 
     /// <summary>
     /// 修改事项数据
     /// </summary>
+    /// <param name="itemID">事项 ID</param>
+    /// <param name="itemContent">事项 内容</param>
+    /// <param name="itemStatus">事项 状态</param>
     public void ModifyItemData(int itemID, string itemContent, bool itemStatus)
     {
         foreach(Item child in allItem.items)
@@ -84,8 +96,15 @@ public class DataManager : MonoBehaviour
 
         json = JsonUtility.ToJson(allItem);
         Debug.Log("修改 " + json);
+        WriteJson();
     }
 
+    /// <summary>
+    /// 删除事项数据
+    /// </summary>
+    /// <param name="itemID">事项 ID</param>
+    /// <param name="itemContent">事项 内容</param>
+    /// <param name="itemStatus">事项 状态</param>
     public void DeleteItemData(int itemID, string itemContent, bool itemStatus)
     {
         for(int i = 0; i < allItem.items.Count; i++)
@@ -99,6 +118,38 @@ public class DataManager : MonoBehaviour
 
         json = JsonUtility.ToJson(allItem);
         Debug.Log("删除 " + json);
+        WriteJson();
+    }
+
+    /// <summary>
+    /// 读取 json
+    /// </summary>
+    public void ReadJson()
+    {
+        StreamReader sr = new StreamReader(path);
+
+        json = sr.ReadLine();
+
+        sr.Close();
+    }
+
+    /// <summary>
+    /// 写入 json
+    /// </summary>
+    public void WriteJson()
+    {
+        StreamWriter sw = new StreamWriter(path, false);
+
+        sw.Write(json);
+
+        sw.Flush();
+
+        sw.Close();
+    }
+
+    public void TransformToAllItem()
+    {
+        allItem = JsonUtility.FromJson<AllItem>(json);
     }
 
     #endregion

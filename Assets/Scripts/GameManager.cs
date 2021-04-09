@@ -88,6 +88,7 @@ public class GameManager : MonoBehaviour
         searchItemButton.onClick.AddListener(delegate { SearchItem(); });
         finishedButton.onClick.AddListener(delegate { ShowOrHideFinishedItem(); });
         id = PlayerPrefs.GetInt("ID", 0);
+        ReadDataFromAllItem();
     }
 
     void Update()
@@ -228,6 +229,55 @@ public class GameManager : MonoBehaviour
         for(int i = finishedButton.transform.GetSiblingIndex() + 1; i < content.transform.childCount; i++)
         {
             content.transform.GetChild(i).gameObject.SetActive(isItemShow);
+        }
+    }
+
+    void ReadDataFromAllItem()
+    {
+        foreach(Item child in DataManager.instance.allItem.items)
+        {
+            // 实例化事项，并添加到滚动视图中
+            GameObject item = Instantiate(itemPrefab, content.transform);
+            item.name = "Item";
+            item.transform.SetAsFirstSibling();
+
+            Text itemText = item.transform.Find("Toggle/Label").GetComponent<Text>();
+            itemText.text = child.itemContent;
+
+            Text idText = item.transform.Find("IDText").GetComponent<Text>();
+            idText.text = child.itemID.ToString();
+
+            Toggle toggleButton = item.transform.Find("Toggle").GetComponent<Toggle>();
+            
+            toggleButton.onValueChanged.AddListener(delegate
+            {
+                if (toggleButton.isOn)
+                {
+                    FinishItem(item);
+
+                    // 修改数据
+                    DataManager.instance.ModifyItemData(int.Parse(idText.text), itemText.text, true);
+                }
+                else
+                {
+                    RecoverItem(item);
+
+                    // 修改数据
+                    DataManager.instance.ModifyItemData(int.Parse(idText.text), itemText.text, false);
+                }
+            });
+
+            toggleButton.isOn = child.isFinished;
+
+            Button deleteButton = item.transform.Find("DeleteButton").GetComponent<Button>();
+            deleteButton.onClick.AddListener(delegate
+            {
+                DataManager.instance.DeleteItemData(int.Parse(idText.text), itemText.text, false);
+                Destroy(item);
+            });
+
+            count++;
+            countText.text = $"今天 {count} 件事";
         }
     }
 
