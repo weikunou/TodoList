@@ -42,7 +42,12 @@ public class DataManager : MonoBehaviour
 
     void Start()
     {
+#if UNITY_EDITOR || UNITY_STANDALONE
         path = Application.streamingAssetsPath + "/Data.json";
+
+#elif UNITY_ANDROID
+        path = Application.streamingAssetsPath + "/bin/Data.json";
+#endif
         ReadJson();
         TransformToAllItem();
     }
@@ -52,9 +57,9 @@ public class DataManager : MonoBehaviour
         
     }
 
-    #endregion
+#endregion
 
-    #region 自定义函数
+#region 自定义函数
 
     /// <summary>
     /// 添加事项数据
@@ -152,7 +157,7 @@ public class DataManager : MonoBehaviour
         allItem = JsonUtility.FromJson<AllItem>(json);
     }
 
-    #endregion
+#endregion
 }
 
 /// <summary>

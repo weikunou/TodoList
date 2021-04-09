@@ -150,6 +150,8 @@ public class GameManager : MonoBehaviour
         deleteButton.onClick.AddListener(delegate
         {
             DataManager.instance.DeleteItemData(int.Parse(idText.text), itemText.text, false);
+            count--;
+            countText.text = $"今天 {count} 件事";
             Destroy(item);
         });
 
@@ -273,6 +275,8 @@ public class GameManager : MonoBehaviour
             deleteButton.onClick.AddListener(delegate
             {
                 DataManager.instance.DeleteItemData(int.Parse(idText.text), itemText.text, false);
+                count--;
+                countText.text = $"今天 {count} 件事";
                 Destroy(item);
             });
 
