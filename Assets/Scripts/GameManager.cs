@@ -41,12 +41,18 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    #region private 字段
+
+    bool isItemShow = true;
+
+    #endregion
 
     #region 生命周期函数
 
     void Start()
     {
         addItemButton.onClick.AddListener(delegate { AddItem(); });
+        finishedButton.onClick.AddListener(delegate { ShowOrHideFinishedItem(); });
     }
 
     void Update()
@@ -78,7 +84,21 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void FinishItem(GameObject item)
     {
-        item.transform.SetSiblingIndex(finishedButton.transform.GetSiblingIndex() + 1);
+        item.transform.SetSiblingIndex(finishedButton.transform.GetSiblingIndex());
+        item.SetActive(isItemShow);
+    }
+
+    /// <summary>
+    /// 显示或隐藏已完成的事项
+    /// </summary>
+    void ShowOrHideFinishedItem()
+    {
+        isItemShow = !isItemShow;
+
+        for(int i = finishedButton.transform.GetSiblingIndex() + 1; i < content.transform.childCount; i++)
+        {
+            content.transform.GetChild(i).gameObject.SetActive(isItemShow);
+        }
     }
 
     #endregion
