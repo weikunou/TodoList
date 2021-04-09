@@ -22,10 +22,15 @@ public class GameManager : MonoBehaviour
     public Button finishedButton;
 
     /// <summary>
-    /// 文本输入框
+    /// 文本
     /// </summary>
     [Header("输入框")]
     public InputField inputField;
+
+    /// <summary>
+    /// 数量文本
+    /// </summary>
+    public Text countText;
 
     /// <summary>
     /// 滚动视图的内容
@@ -39,11 +44,29 @@ public class GameManager : MonoBehaviour
     [Header("预制体资源")]
     public GameObject itemPrefab;
 
+    /// <summary>
+    /// 事项未完成的颜色
+    /// </summary>
+    public Color itemColor;
+
+    /// <summary>
+    /// 事项完成后的颜色
+    /// </summary>
+    public Color itemFinishedColor;
+
     #endregion
 
     #region private 字段
 
+    /// <summary>
+    /// 事项是否显示
+    /// </summary>
     bool isItemShow = true;
+
+    /// <summary>
+    /// 事项数量
+    /// </summary>
+    int count;
 
     #endregion
 
@@ -57,7 +80,10 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     #endregion
@@ -74,9 +100,23 @@ public class GameManager : MonoBehaviour
 
         Text itemText = item.transform.Find("Toggle/Label").GetComponent<Text>();
         itemText.text = inputField.text;
+        inputField.text = "";
 
         Toggle toggleButton = item.transform.Find("Toggle").GetComponent<Toggle>();
-        toggleButton.onValueChanged.AddListener(delegate { FinishItem(item); });
+        toggleButton.onValueChanged.AddListener(delegate
+        {
+            if (toggleButton.isOn)
+            {
+                FinishItem(item);
+            }
+            else
+            {
+                RecoverItem(item);
+            }
+        });
+
+        count++;
+        countText.text = $"今天 {count} 件事";
     }
 
     /// <summary>
@@ -86,6 +126,16 @@ public class GameManager : MonoBehaviour
     {
         item.transform.SetSiblingIndex(finishedButton.transform.GetSiblingIndex());
         item.SetActive(isItemShow);
+        item.GetComponent<Image>().color = itemFinishedColor;
+    }
+
+    /// <summary>
+    /// 恢复事项
+    /// </summary>
+    void RecoverItem(GameObject item)
+    {
+        item.transform.SetSiblingIndex(finishedButton.transform.GetSiblingIndex());
+        item.GetComponent<Image>().color = itemColor;
     }
 
     /// <summary>
