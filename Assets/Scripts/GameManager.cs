@@ -107,6 +107,11 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void AddItem()
     {
+        if (inputField.text.Equals(""))
+        {
+            return;
+        }
+
         // 实例化事项，并添加到滚动视图中
         GameObject item = Instantiate(itemPrefab, content.transform);
         item.name = "Item";
