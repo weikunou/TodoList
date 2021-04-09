@@ -68,6 +68,11 @@ public class GameManager : MonoBehaviour
     /// </summary>
     int count;
 
+    /// <summary>
+    /// 事项 ID
+    /// </summary>
+    int id;
+
     #endregion
 
     #region 生命周期函数
@@ -76,6 +81,7 @@ public class GameManager : MonoBehaviour
     {
         addItemButton.onClick.AddListener(delegate { AddItem(); });
         finishedButton.onClick.AddListener(delegate { ShowOrHideFinishedItem(); });
+        id = PlayerPrefs.GetInt("ID", 0);
     }
 
     void Update()
@@ -95,8 +101,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void AddItem()
     {
+        // 实例化事项，并添加到滚动视图中
         GameObject item = Instantiate(itemPrefab, content.transform);
+        item.name = "Item";
         item.transform.SetAsFirstSibling();
+        id++;
+        PlayerPrefs.SetInt("ID", id);
 
         Text itemText = item.transform.Find("Toggle/Label").GetComponent<Text>();
         itemText.text = inputField.text;
@@ -108,15 +118,24 @@ public class GameManager : MonoBehaviour
             if (toggleButton.isOn)
             {
                 FinishItem(item);
+
+                // 修改数据
+                DataManager.instance.ModifyItemData(id, itemText.text, true);
             }
             else
             {
                 RecoverItem(item);
+
+                // 修改数据
+                DataManager.instance.ModifyItemData(id, itemText.text, false);
             }
         });
 
         count++;
         countText.text = $"今天 {count} 件事";
+
+        // 添加数据
+        DataManager.instance.AddItemData(id, itemText.text, false);
     }
 
     /// <summary>
