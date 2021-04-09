@@ -231,7 +231,7 @@ RectTransform:
   m_Children:
   - {fileID: 1789191942}
   m_Father: {fileID: 1233907885}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -527,7 +527,7 @@ RectTransform:
   m_Children:
   - {fileID: 1771964470}
   m_Father: {fileID: 1233907885}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -1189,6 +1189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   addItemButton: {fileID: 406451737}
+  searchItemButton: {fileID: 62218129}
   finishedButton: {fileID: 750979087}
   inputField: {fileID: 2070586437}
   countText: {fileID: 494951463}
@@ -1382,8 +1383,8 @@ RectTransform:
   m_Children:
   - {fileID: 51208432}
   - {fileID: 494951462}
-  - {fileID: 62218128}
   - {fileID: 406451736}
+  - {fileID: 62218128}
   - {fileID: 2070586436}
   - {fileID: 520875662}
   m_Father: {fileID: 191783550}

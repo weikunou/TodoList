@@ -17,6 +17,11 @@ public class GameManager : MonoBehaviour
     public Button addItemButton;
 
     /// <summary>
+    /// 查询事项按钮
+    /// </summary>
+    public Button searchItemButton;
+
+    /// <summary>
     /// 已完成按钮
     /// </summary>
     public Button finishedButton;
@@ -80,6 +85,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         addItemButton.onClick.AddListener(delegate { AddItem(); });
+        searchItemButton.onClick.AddListener(delegate { SearchItem(); });
         finishedButton.onClick.AddListener(delegate { ShowOrHideFinishedItem(); });
         id = PlayerPrefs.GetInt("ID", 0);
     }
@@ -112,6 +118,9 @@ public class GameManager : MonoBehaviour
         itemText.text = inputField.text;
         inputField.text = "";
 
+        Text idText = item.transform.Find("IDText").GetComponent<Text>();
+        idText.text = id.ToString();
+
         Toggle toggleButton = item.transform.Find("Toggle").GetComponent<Toggle>();
         toggleButton.onValueChanged.AddListener(delegate
         {
@@ -120,21 +129,21 @@ public class GameManager : MonoBehaviour
                 FinishItem(item);
 
                 // 修改数据
-                DataManager.instance.ModifyItemData(id, itemText.text, true);
+                DataManager.instance.ModifyItemData(int.Parse(idText.text), itemText.text, true);
             }
             else
             {
                 RecoverItem(item);
 
                 // 修改数据
-                DataManager.instance.ModifyItemData(id, itemText.text, false);
+                DataManager.instance.ModifyItemData(int.Parse(idText.text), itemText.text, false);
             }
         });
 
         Button deleteButton = item.transform.Find("DeleteButton").GetComponent<Button>();
         deleteButton.onClick.AddListener(delegate
         {
-            DataManager.instance.DeleteItemData(id, itemText.text, false);
+            DataManager.instance.DeleteItemData(int.Parse(idText.text), itemText.text, false);
             Destroy(item);
         });
 
@@ -143,6 +152,46 @@ public class GameManager : MonoBehaviour
 
         // 添加数据
         DataManager.instance.AddItemData(id, itemText.text, false);
+    }
+
+    /// <summary>
+    /// 查询事项
+    /// </summary>
+    void SearchItem()
+    {
+        if (inputField.text.Equals(""))
+        {
+            foreach(Transform child in content.transform)
+            {
+                if (child.name.Equals("FinishedButton"))
+                {
+                    continue;
+                }
+
+                child.gameObject.SetActive(true);
+            }
+
+            return;
+        }
+
+        foreach(Transform child in content.transform)
+        {
+            if (child.name.Equals("FinishedButton"))
+            {
+                continue;
+            }
+
+            Text itemText = child.transform.Find("Toggle/Label").GetComponent<Text>();
+
+            if (itemText.text.Contains(inputField.text))
+            {
+                child.gameObject.SetActive(true);
+            }
+            else
+            {
+                child.gameObject.SetActive(false);
+            }
+        }
     }
 
     /// <summary>
