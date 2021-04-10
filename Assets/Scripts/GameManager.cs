@@ -240,7 +240,7 @@ public class GameManager : MonoBehaviour
                 continue;
             }
 
-            Text itemText = child.transform.Find("Toggle/Label").GetComponent<Text>();
+            Text itemText = child.transform.Find("TextButton/Text").GetComponent<Text>();
 
             if (itemText.text.Contains(inputField.text))
             {
