@@ -142,19 +142,24 @@ public class GameManager : MonoBehaviour
         itemText.text = inputField.text;
         inputField.text = "";
 
+        // 修改事项 ID
+        Text idText = item.transform.Find("IDText").GetComponent<Text>();
+        idText.text = id.ToString();
+
         // 修改事项文本按钮
         Button textButton = item.transform.Find("TextButton").GetComponent<Button>();
         textButton.onClick.AddListener(delegate
         {
             ShowTheModifyTextWindow();
             modifyInputField.text = itemText.text;
-            modifyInputField.onValueChanged.AddListener(delegate { itemText.text = modifyInputField.text; });
+            modifyInputField.onValueChanged.AddListener(delegate
+            {
+                itemText.text = modifyInputField.text;
+                // 修改数据
+                DataManager.instance.ModifyItemData(int.Parse(idText.text), itemText.text, true);
+            });
             Debug.Log(itemText);
         });
-
-        // 修改事项 ID
-        Text idText = item.transform.Find("IDText").GetComponent<Text>();
-        idText.text = id.ToString();
 
         // 修改开关
         Toggle toggleButton = item.transform.Find("Toggle").GetComponent<Toggle>();
@@ -299,18 +304,23 @@ public class GameManager : MonoBehaviour
             Text itemText = item.transform.Find("TextButton/Text").GetComponent<Text>();
             itemText.text = child.itemContent;
 
+            // 修改事项 ID
+            Text idText = item.transform.Find("IDText").GetComponent<Text>();
+            idText.text = child.itemID.ToString();
+
             // 修改事项文本按钮
             Button textButton = item.transform.Find("TextButton").GetComponent<Button>();
             textButton.onClick.AddListener(delegate
             {
                 ShowTheModifyTextWindow();
                 modifyInputField.text = itemText.text;
-                modifyInputField.onValueChanged.AddListener(delegate { itemText.text = modifyInputField.text; });
+                modifyInputField.onValueChanged.AddListener(delegate
+                {
+                    itemText.text = modifyInputField.text;
+                    // 修改数据
+                    DataManager.instance.ModifyItemData(int.Parse(idText.text), itemText.text, true);
+                });
             });
-
-            // 修改事项 ID
-            Text idText = item.transform.Find("IDText").GetComponent<Text>();
-            idText.text = child.itemID.ToString();
 
             // 修改开关
             Toggle toggleButton = item.transform.Find("Toggle").GetComponent<Toggle>();
