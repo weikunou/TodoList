@@ -43,6 +43,22 @@ public class GameManager : MonoBehaviour
     [Header("滚动视图")]
     public GameObject content;
 
+
+    /// <summary>
+    /// 修改窗口
+    /// </summary>
+    public GameObject modifyPanel;
+
+    /// <summary>
+    /// 关闭修改窗口按钮
+    /// </summary>
+    public Button closeButton;
+
+    /// <summary>
+    /// 修改窗口的文本输入框
+    /// </summary>
+    public InputField modifyInputField;
+
     /// <summary>
     /// 事项预制体
     /// </summary>
@@ -87,6 +103,7 @@ public class GameManager : MonoBehaviour
         addItemButton.onClick.AddListener(delegate { AddItem(); });
         searchItemButton.onClick.AddListener(delegate { SearchItem(); });
         finishedButton.onClick.AddListener(delegate { ShowOrHideFinishedItem(); });
+        closeButton.onClick.AddListener(delegate { HideTheModifyTextWindow(); });
         id = PlayerPrefs.GetInt("ID", 0);
         ReadDataFromAllItem();
     }
@@ -120,13 +137,25 @@ public class GameManager : MonoBehaviour
         id++;
         PlayerPrefs.SetInt("ID", id);
 
-        Text itemText = item.transform.Find("Toggle/Label").GetComponent<Text>();
+        // 修改事项文本
+        Text itemText = item.transform.Find("TextButton/Text").GetComponent<Text>();
         itemText.text = inputField.text;
         inputField.text = "";
 
+        // 修改事项文本按钮
+        Button textButton = item.transform.Find("TextButton").GetComponent<Button>();
+        textButton.onClick.AddListener(delegate
+        {
+            ShowTheModifyTextWindow();
+            modifyInputField.text = itemText.text;
+            modifyInputField.onValueChanged.AddListener(delegate { itemText.text = modifyInputField.text; });
+        });
+
+        // 修改事项 ID
         Text idText = item.transform.Find("IDText").GetComponent<Text>();
         idText.text = id.ToString();
 
+        // 修改开关
         Toggle toggleButton = item.transform.Find("Toggle").GetComponent<Toggle>();
         toggleButton.onValueChanged.AddListener(delegate
         {
@@ -146,6 +175,7 @@ public class GameManager : MonoBehaviour
             }
         });
 
+        // 修改删除按钮
         Button deleteButton = item.transform.Find("DeleteButton").GetComponent<Button>();
         deleteButton.onClick.AddListener(delegate
         {
@@ -155,6 +185,7 @@ public class GameManager : MonoBehaviour
             Destroy(item);
         });
 
+        // 修改事项数量
         count++;
         countText.text = $"今天 {count} 件事";
 
@@ -234,6 +265,25 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 显示修改事项文本窗口
+    /// </summary>
+    void ShowTheModifyTextWindow()
+    {
+        modifyPanel.SetActive(true);
+    }
+
+    /// <summary>
+    /// 隐藏修改事项文本窗口
+    /// </summary>
+    void HideTheModifyTextWindow()
+    {
+        modifyPanel.SetActive(false);
+    }
+
+    /// <summary>
+    /// 从 allItem 里读取事项
+    /// </summary>
     void ReadDataFromAllItem()
     {
         foreach(Item child in DataManager.instance.allItem.items)
@@ -243,14 +293,25 @@ public class GameManager : MonoBehaviour
             item.name = "Item";
             item.transform.SetAsFirstSibling();
 
-            Text itemText = item.transform.Find("Toggle/Label").GetComponent<Text>();
+            // 修改事项文本
+            Text itemText = item.transform.Find("TextButton/Text").GetComponent<Text>();
             itemText.text = child.itemContent;
 
+            // 修改事项文本按钮
+            Button textButton = item.transform.Find("TextButton").GetComponent<Button>();
+            textButton.onClick.AddListener(delegate
+            {
+                ShowTheModifyTextWindow();
+                modifyInputField.text = itemText.text;
+                modifyInputField.onValueChanged.AddListener(delegate { itemText.text = modifyInputField.text; });
+            });
+
+            // 修改事项 ID
             Text idText = item.transform.Find("IDText").GetComponent<Text>();
             idText.text = child.itemID.ToString();
 
+            // 修改开关
             Toggle toggleButton = item.transform.Find("Toggle").GetComponent<Toggle>();
-            
             toggleButton.onValueChanged.AddListener(delegate
             {
                 if (toggleButton.isOn)
@@ -271,6 +332,7 @@ public class GameManager : MonoBehaviour
 
             toggleButton.isOn = child.isFinished;
 
+            // 修改删除按钮
             Button deleteButton = item.transform.Find("DeleteButton").GetComponent<Button>();
             deleteButton.onClick.AddListener(delegate
             {
@@ -280,6 +342,7 @@ public class GameManager : MonoBehaviour
                 Destroy(item);
             });
 
+            // 修改事项数量
             count++;
             countText.text = $"今天 {count} 件事";
         }
