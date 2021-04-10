@@ -42,12 +42,22 @@ public class DataManager : MonoBehaviour
 
     void Start()
     {
-#if UNITY_EDITOR || UNITY_STANDALONE
-        path = Application.streamingAssetsPath + "/Data.json";
 
-#elif UNITY_ANDROID
-        path = Application.streamingAssetsPath + "/bin/Data.json";
-#endif
+//#if UNITY_EDITOR || UNITY_STANDALONE
+//        //path = Application.streamingAssetsPath + "/Data.json";
+//#elif UNITY_ANDROID
+//        //path = Application.dataPath + "!assets/Data.json";
+//#endif
+
+        path = Application.persistentDataPath + "/Data.json";
+
+        if (PlayerPrefs.GetString("isFirstStart", "Yes").Equals("Yes"))
+        {
+            json = JsonUtility.ToJson(allItem);
+            WriteJson();
+            PlayerPrefs.SetString("isFirstStart", "No");
+        }
+
         ReadJson();
         TransformToAllItem();
     }
