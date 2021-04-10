@@ -96,8 +96,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     int id;
 
-    public Text test;
-
     #endregion
 
     #region 生命周期函数
@@ -122,8 +120,6 @@ public class GameManager : MonoBehaviour
         closeButton.onClick.AddListener(delegate { HideTheModifyTextWindow(); });
         id = PlayerPrefs.GetInt("ID", 0);
         ReadDataFromAllItem();
-
-        test.text = Application.persistentDataPath;
     }
 
     void Update()
