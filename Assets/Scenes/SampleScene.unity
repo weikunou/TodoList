@@ -1556,6 +1556,72 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 605090481}
   m_CullTransparentMesh: 0
+--- !u!1 &666179485
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 666179486}
+  - component: {fileID: 666179487}
+  m_Layer: 0
+  m_Name: ThemeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &666179486
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 666179485}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &666179487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 666179485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f907939a97ca8c459f69a8cd78bb2c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  darkTheme: 1
+  darkImage: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+  darkText: {r: 1, g: 1, b: 1, a: 1}
+  darkButtonNormal: {r: 0.25, g: 0.25, b: 0.25, a: 1}
+  darkButtonHighlighted: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+  darkButtonPress: {r: 0.15, g: 0.15, b: 0.15, a: 1}
+  darkButtonSelected: {r: 0.25, g: 0.25, b: 0.25, a: 1}
+  itemColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+  itemFinishedColor: {r: 0.2, g: 0.2, b: 0.2, a: 0.2}
+  scrollView: {fileID: 1727530039}
+  scrollViewInner: {fileID: 520875664}
+  mainPanel: {fileID: 1233907886}
+  titleText: {fileID: 51208433}
+  countText: {fileID: 494951463}
+  addItemButton: {fileID: 406451737}
+  searchItemButton: {fileID: 62218129}
+  inputField: {fileID: 2070586437}
+  finishedButton: {fileID: 750979087}
+  modifyInputField: {fileID: 30067643}
+  itemPrefab: {fileID: 4305361089801223756, guid: 702e7ca59f265174f83d90430097574e,
+    type: 3}
+  itemDarkPrefab: {fileID: 4305361089801223756, guid: 4f3f1d2f3729e0846bd72a9192b6fedb,
+    type: 3}
 --- !u!1 &747597910
 GameObject:
   m_ObjectHideFlags: 0

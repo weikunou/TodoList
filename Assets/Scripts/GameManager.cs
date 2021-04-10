@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 {
     #region public 字段
 
+    public static GameManager instance;
+
     /// <summary>
     /// 添加事项按钮
     /// </summary>
@@ -97,6 +99,18 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region 生命周期函数
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
