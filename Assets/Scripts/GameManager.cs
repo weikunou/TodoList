@@ -202,7 +202,6 @@ public class GameManager : MonoBehaviour
             DataManager.instance.DeleteItemData(int.Parse(idText.text), itemText.text, false);
             count--;
             countText.text = $"今天 {count} 件事";
-            modifyInputField.onValueChanged.RemoveAllListeners();
             Destroy(item);
         });
 
@@ -300,6 +299,7 @@ public class GameManager : MonoBehaviour
     void HideTheModifyTextWindow()
     {
         modifyPanel.SetActive(false);
+        modifyInputField.onValueChanged.RemoveAllListeners();
     }
 
     /// <summary>
@@ -365,7 +365,6 @@ public class GameManager : MonoBehaviour
                 DataManager.instance.DeleteItemData(int.Parse(idText.text), itemText.text, false);
                 count--;
                 countText.text = $"今天 {count} 件事";
-                modifyInputField.onValueChanged.RemoveAllListeners();
                 Destroy(item);
             });
 
