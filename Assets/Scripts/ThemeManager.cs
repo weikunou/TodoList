@@ -249,6 +249,11 @@ public class ThemeManager : MonoBehaviour
     public Image scrollViewInner;
 
     /// <summary>
+    /// 设置窗口滚动视图
+    /// </summary>
+    public Image scrollViewSetting;
+
+    /// <summary>
     /// 主窗口
     /// </summary>
     public Image mainPanel;
@@ -293,14 +298,11 @@ public class ThemeManager : MonoBehaviour
     /// </summary>
     public Text settingTitle;
 
-    /// <summary>
-    /// 开关组的标题
-    /// </summary>
-    public Text toggleGroupTitle;
-
     #endregion
 
-    public ToggleGroup toggleGroup;
+    public ToggleGroup colorToggleGroup;
+
+    public ToggleGroup resizeToggleGroup;
 
     void Start()
     {
@@ -310,7 +312,7 @@ public class ThemeManager : MonoBehaviour
         var e = new ColorTheme();
         string[] values = Enum.GetNames(e.GetType());
 
-        foreach(Transform child in toggleGroup.transform)
+        foreach(Transform child in colorToggleGroup.transform)
         {
             if (child.name.Equals("TitleText"))
             {
@@ -324,6 +326,31 @@ public class ThemeManager : MonoBehaviour
                     string colorStr = child.name.Split('T')[0];
 
                     ChooseColorTheme((ColorTheme)Enum.Parse(typeof(ColorTheme), colorStr));
+                }
+            });
+        }
+
+        foreach (Transform child in resizeToggleGroup.transform)
+        {
+            if (child.name.Equals("TitleText"))
+            {
+                continue;
+            }
+
+            child.GetComponent<Toggle>().onValueChanged.AddListener(delegate
+            {
+                if (child.GetComponent<Toggle>().isOn)
+                {
+                    string resizeStr = child.name.Split('T')[0];
+
+                    if (resizeStr.Equals("Fix"))
+                    {
+                        GameManager.instance.isResize = false;
+                    }
+                    else
+                    {
+                        GameManager.instance.isResize = true;
+                    }
                 }
             });
         }
@@ -389,6 +416,7 @@ public class ThemeManager : MonoBehaviour
         Camera.main.backgroundColor = imageColor;
         scrollView.color = imageColor;
         scrollViewInner.color = imageColor;
+        scrollViewSetting.color = imageColor;
         mainPanel.color = imageColor;
         titleText.color = textColor;
         countText.color = textColor;
@@ -426,8 +454,10 @@ public class ThemeManager : MonoBehaviour
         GameManager.instance.settingPanel.GetComponent<Image>().color = imageColor;
 
         settingTitle.color = textColor;
-        toggleGroup.GetComponent<Image>().color = imageColor;
-        toggleGroupTitle.color = textColor;
+        colorToggleGroup.GetComponent<Image>().color = imageColor;
+        colorToggleGroup.transform.Find("TitleText").GetComponent<Text>().color = textColor;
+        resizeToggleGroup.GetComponent<Image>().color = imageColor;
+        resizeToggleGroup.transform.Find("TitleText").GetComponent<Text>().color = textColor;
 
         foreach (Transform child in GameManager.instance.content.transform)
         {
@@ -436,14 +466,33 @@ public class ThemeManager : MonoBehaviour
                 continue;
             }
 
-            child.GetComponent<Image>().color = itemColor;
+            if (child.GetSiblingIndex() < GameManager.instance.finishedButton.transform.GetSiblingIndex())
+            {
+                child.GetComponent<Image>().color = itemColor;
+            }
+            else
+            {
+                child.GetComponent<Image>().color = itemFinishedColor;
+            }
+            
             child.Find("TextButton/Text").GetComponent<Text>().color = textColor;
             child.Find("Toggle").GetComponent<Toggle>().colors = cb;
             child.Find("DeleteButton").GetComponent<Button>().colors = cb;
             child.Find("DeleteButton/Text").GetComponent<Text>().color = textColor;
         }
 
-        foreach (Transform child in toggleGroup.transform)
+        foreach (Transform child in colorToggleGroup.transform)
+        {
+            if (child.name.Equals("TitleText"))
+            {
+                continue;
+            }
+
+            child.GetComponent<Toggle>().colors = cb;
+            child.Find("Label").GetComponent<Text>().color = textColor;
+        }
+
+        foreach (Transform child in resizeToggleGroup.transform)
         {
             if (child.name.Equals("TitleText"))
             {

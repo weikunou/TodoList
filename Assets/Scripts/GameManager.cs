@@ -110,6 +110,27 @@ public class GameManager : MonoBehaviour
     /// </summary>
     int id;
 
+    float screenWidth;
+
+    float screenHeight;
+
+    float preScreenWidth = 1080f;
+
+    float factor;
+
+    public GameObject topSection;
+
+    public GameObject middleSection;
+
+    public GameObject bottomSection;
+
+    public GameObject outerContent;
+
+    public bool isResize;
+
+    bool setOnce = true;
+    bool setTwoOnce = true;
+
     #endregion
 
     #region 生命周期函数
@@ -136,6 +157,18 @@ public class GameManager : MonoBehaviour
         settingButton.onClick.AddListener(delegate { settingPanel.SetActive(true); });
         id = PlayerPrefs.GetInt("ID", 0);
         ReadDataFromAllItem();
+
+        screenWidth = Screen.width;
+        screenHeight = Screen.height;
+
+        if (isResize)
+        {
+            ChangeScreenSize();
+        }
+        else
+        {
+            ChangePreScreenSize();
+        }
     }
 
     void Update()
@@ -144,11 +177,62 @@ public class GameManager : MonoBehaviour
         {
             Application.Quit();
         }
+
+        if(isResize)
+        {
+            if (setTwoOnce)
+            {
+                ChangeScreenSize();
+                setTwoOnce = false;
+            }
+
+            // 屏幕宽高发生变化
+            if (screenWidth != Screen.width || screenHeight != Screen.height)
+            {
+                screenWidth = Screen.width;
+                screenHeight = Screen.height;
+                ChangeScreenSize();
+            }
+            
+            setOnce = true;
+        }
+        else
+        {
+            if (setOnce)
+            {
+                ChangePreScreenSize();
+                setOnce = false;
+                setTwoOnce = true;
+            }
+        }
     }
 
     #endregion
 
     #region 自定义函数
+
+    public void ChangePreScreenSize()
+    {
+        outerContent.GetComponent<RectTransform>().anchorMin = new Vector2(0, 1);
+        outerContent.GetComponent<RectTransform>().anchorMax = new Vector2(1, 1);
+        outerContent.GetComponent<RectTransform>().offsetMin = new Vector2(0, -1920f);
+        outerContent.GetComponent<RectTransform>().offsetMax = new Vector2(0, 0);
+
+        topSection.GetComponent<RectTransform>().offsetMin = new Vector2(0, 1550f);
+        bottomSection.GetComponent<RectTransform>().offsetMax = new Vector2(0, -1820f);
+    }
+
+    public void ChangeScreenSize()
+    {
+        outerContent.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
+        outerContent.GetComponent<RectTransform>().anchorMax = new Vector2(1, 1);
+        outerContent.GetComponent<RectTransform>().offsetMin = new Vector2(0, 0);
+        outerContent.GetComponent<RectTransform>().offsetMax = new Vector2(0, 0);
+
+        factor = screenWidth / preScreenWidth;
+        topSection.GetComponent<RectTransform>().offsetMin = new Vector2(0, screenHeight / factor - 370);
+        bottomSection.GetComponent<RectTransform>().offsetMax = new Vector2(0, -(screenHeight / factor - 100));
+    }
 
     /// <summary>
     /// 添加事项
