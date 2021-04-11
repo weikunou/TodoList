@@ -29,6 +29,16 @@ public class GameManager : MonoBehaviour
     public Button finishedButton;
 
     /// <summary>
+    /// 概览按钮
+    /// </summary>
+    public Button mainButton;
+
+    /// <summary>
+    /// 设置按钮
+    /// </summary>
+    public Button settingButton;
+
+    /// <summary>
     /// 文本
     /// </summary>
     [Header("输入框")]
@@ -45,6 +55,10 @@ public class GameManager : MonoBehaviour
     [Header("滚动视图")]
     public GameObject content;
 
+    /// <summary>
+    /// 设置窗口
+    /// </summary>
+    public GameObject settingPanel;
 
     /// <summary>
     /// 修改窗口
@@ -118,6 +132,8 @@ public class GameManager : MonoBehaviour
         searchItemButton.onClick.AddListener(delegate { SearchItem(); });
         finishedButton.onClick.AddListener(delegate { ShowOrHideFinishedItem(); });
         closeButton.onClick.AddListener(delegate { HideTheModifyTextWindow(); });
+        mainButton.onClick.AddListener(delegate { settingPanel.SetActive(false); });
+        settingButton.onClick.AddListener(delegate { settingPanel.SetActive(true); });
         id = PlayerPrefs.GetInt("ID", 0);
         ReadDataFromAllItem();
     }

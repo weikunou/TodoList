@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 /// <summary>
 /// 颜色主题
@@ -16,7 +17,17 @@ public enum ColorTheme
     /// <summary>
     /// 黑色主题
     /// </summary>
-    Dark
+    Dark,
+
+    /// <summary>
+    /// 蓝色主题
+    /// </summary>
+    Blue,
+
+    /// <summary>
+    /// 粉色主题
+    /// </summary>
+    Pink
 }
 
 /// <summary>
@@ -124,6 +135,106 @@ public class ThemeManager : MonoBehaviour
 
     #endregion
 
+    #region 蓝色主题配色
+
+    /// <summary>
+    /// 蓝色主题图片颜色
+    /// </summary>
+    [Header("蓝色主题颜色")]
+    public Color blueImage;
+
+    /// <summary>
+    /// 蓝色主题字体颜色
+    /// </summary>
+    public Color blueText;
+
+    /// <summary>
+    /// 蓝色主题按钮普通颜色
+    /// </summary>
+    public Color blueButtonNormal;
+
+    /// <summary>
+    /// 蓝色主题按钮高亮颜色
+    /// </summary>
+    public Color blueButtonHighlighted;
+
+    /// <summary>
+    /// 蓝色主题按钮按下颜色
+    /// </summary>
+    public Color blueButtonPress;
+
+    /// <summary>
+    /// 蓝色主题按钮选中颜色
+    /// </summary>
+    public Color blueButtonSelected;
+
+    /// <summary>
+    /// 蓝色主题事项颜色
+    /// </summary>
+    public Color blueItemColor;
+
+    /// <summary>
+    /// 蓝色主题事项完成颜色
+    /// </summary>
+    public Color blueItemFinishedColor;
+
+    /// <summary>
+    /// 蓝色主题事项预制体
+    /// </summary>
+    public GameObject blueItemPrefab;
+
+    #endregion
+
+    #region 粉色主题配色
+
+    /// <summary>
+    /// 粉色主题图片颜色
+    /// </summary>
+    [Header("粉色主题颜色")]
+    public Color pinkImage;
+
+    /// <summary>
+    /// 粉色主题字体颜色
+    /// </summary>
+    public Color pinkText;
+
+    /// <summary>
+    /// 粉色主题按钮普通颜色
+    /// </summary>
+    public Color pinkButtonNormal;
+
+    /// <summary>
+    /// 粉色主题按钮高亮颜色
+    /// </summary>
+    public Color pinkButtonHighlighted;
+
+    /// <summary>
+    /// 粉色主题按钮按下颜色
+    /// </summary>
+    public Color pinkButtonPress;
+
+    /// <summary>
+    /// 粉色主题按钮选中颜色
+    /// </summary>
+    public Color pinkButtonSelected;
+
+    /// <summary>
+    /// 粉色主题事项颜色
+    /// </summary>
+    public Color pinkItemColor;
+
+    /// <summary>
+    /// 粉色主题事项完成颜色
+    /// </summary>
+    public Color pinkItemFinishedColor;
+
+    /// <summary>
+    /// 粉色主题事项预制体
+    /// </summary>
+    public GameObject pinkItemPrefab;
+
+    #endregion
+
     #region 改变颜色的组件
 
     /// <summary>
@@ -178,35 +289,44 @@ public class ThemeManager : MonoBehaviour
     public InputField modifyInputField;
 
     /// <summary>
-    /// 颜色主题开关
+    /// 设置窗口的标题
     /// </summary>
-    public Toggle colorThemeToggle;
+    public Text settingTitle;
+
+    /// <summary>
+    /// 开关组的标题
+    /// </summary>
+    public Text toggleGroupTitle;
 
     #endregion
 
-    int colorIndex;
+    public ToggleGroup toggleGroup;
 
     void Start()
     {
         // 默认黑色主题
         ChooseColorTheme(ColorTheme.Dark);
 
-        colorIndex = 1;
-
         var e = new ColorTheme();
-        string[] values = System.Enum.GetNames(e.GetType());
+        string[] values = Enum.GetNames(e.GetType());
 
-        colorThemeToggle.onValueChanged.AddListener(delegate
+        foreach(Transform child in toggleGroup.transform)
         {
-            colorIndex++;
-
-            if(colorIndex >= values.Length)
+            if (child.name.Equals("TitleText"))
             {
-                colorIndex = 0;
+                continue;
             }
 
-            ChooseColorTheme((ColorTheme)colorIndex);
-        });
+            child.GetComponent<Toggle>().onValueChanged.AddListener(delegate
+            {
+                if (child.GetComponent<Toggle>().isOn)
+                {
+                    string colorStr = child.name.Split('T')[0];
+
+                    ChooseColorTheme((ColorTheme)Enum.Parse(typeof(ColorTheme), colorStr));
+                }
+            });
+        }
     }
 
     void Update()
@@ -231,6 +351,16 @@ public class ThemeManager : MonoBehaviour
                 ChangeColorTheme(darkText, darkImage,
                     darkButtonNormal, darkButtonHighlighted, darkButtonPress, darkButtonSelected,
                     darkItemPrefab, darkItemColor, darkItemFinishedColor);
+                break;
+            case ColorTheme.Blue:
+                ChangeColorTheme(blueText, blueImage,
+                    blueButtonNormal, blueButtonHighlighted, blueButtonPress, blueButtonSelected,
+                    blueItemPrefab, blueItemColor, blueItemFinishedColor);
+                break;
+            case ColorTheme.Pink:
+                ChangeColorTheme(pinkText, pinkImage,
+                    pinkButtonNormal, pinkButtonHighlighted, pinkButtonPress, pinkButtonSelected,
+                    pinkItemPrefab, pinkItemColor, pinkItemFinishedColor);
                 break;
             default:
                 ChangeColorTheme(whiteText, whiteImage,
@@ -286,24 +416,42 @@ public class ThemeManager : MonoBehaviour
         modifyInputField.transform.Find("Placeholder").GetComponent<Text>().color = textColor;
         modifyInputField.transform.Find("Text").GetComponent<Text>().color = textColor;
 
-        colorThemeToggle.GetComponent<Toggle>().colors = cb;
-
         GameManager.instance.itemPrefab = itemPrefab;
         GameManager.instance.itemColor = itemColor;
         GameManager.instance.itemFinishedColor = itemFinishedColor;
+        GameManager.instance.mainButton.colors = cb;
+        GameManager.instance.settingButton.colors = cb;
+        GameManager.instance.mainButton.transform.Find("Text").GetComponent<Text>().color = textColor;
+        GameManager.instance.settingButton.transform.Find("Text").GetComponent<Text>().color = textColor;
+        GameManager.instance.settingPanel.GetComponent<Image>().color = imageColor;
 
-        foreach(Transform child in GameManager.instance.content.transform)
+        settingTitle.color = textColor;
+        toggleGroup.GetComponent<Image>().color = imageColor;
+        toggleGroupTitle.color = textColor;
+
+        foreach (Transform child in GameManager.instance.content.transform)
         {
             if (child.name.Equals("FinishedButton"))
             {
                 continue;
             }
 
-            child.GetComponent<Image>().color = imageColor;
+            child.GetComponent<Image>().color = itemColor;
             child.Find("TextButton/Text").GetComponent<Text>().color = textColor;
             child.Find("Toggle").GetComponent<Toggle>().colors = cb;
             child.Find("DeleteButton").GetComponent<Button>().colors = cb;
             child.Find("DeleteButton/Text").GetComponent<Text>().color = textColor;
+        }
+
+        foreach (Transform child in toggleGroup.transform)
+        {
+            if (child.name.Equals("TitleText"))
+            {
+                continue;
+            }
+
+            child.GetComponent<Toggle>().colors = cb;
+            child.Find("Label").GetComponent<Text>().color = textColor;
         }
     }
 }
