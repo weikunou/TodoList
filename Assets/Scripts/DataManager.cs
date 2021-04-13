@@ -60,9 +60,9 @@ public class DataManager : MonoBehaviour
         
     }
 
-#endregion
+    #endregion
 
-#region 自定义函数
+    #region 自定义函数
 
     /// <summary>
     /// 添加事项数据
@@ -70,6 +70,9 @@ public class DataManager : MonoBehaviour
     /// <param name="itemID">事项 ID</param>
     /// <param name="itemContent">事项 内容</param>
     /// <param name="itemStatus">事项 状态</param>
+    /// <param name="itemCreatedDate">事项 创建时间</param>
+    /// <param name="itemModifiedDate">事项 修改时间</param>
+    /// <param name="itemFinishedDate">事项 完成时间</param>
     public void AddItemData(int itemID, string itemContent, bool itemStatus,
         string itemCreatedDate, string itemModifiedDate, string itemFinishedDate)
     {
@@ -94,6 +97,8 @@ public class DataManager : MonoBehaviour
     /// <param name="itemID">事项 ID</param>
     /// <param name="itemContent">事项 内容</param>
     /// <param name="itemStatus">事项 状态</param>
+    /// <param name="itemModifiedDate">事项 修改时间</param>
+    /// <param name="itemFinishedDate">事项 完成时间</param>
     public void ModifyItemData(int itemID, string itemContent, bool itemStatus, string itemModifiedDate, string itemFinishedDate)
     {
         foreach(Item child in allItem.items)

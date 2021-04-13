@@ -245,6 +245,8 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        string currentDate = DateTime.Now.ToString();
+
         // 实例化事项，并添加到滚动视图中
         GameObject item = Instantiate(itemPrefab, content.transform);
         item.name = "Item";
@@ -256,6 +258,10 @@ public class GameManager : MonoBehaviour
         Text itemText = item.transform.Find("TextButton/Text").GetComponent<Text>();
         itemText.text = inputField.text;
         inputField.text = "";
+
+        // 修改事项时间文本
+        Text itemDateText = item.transform.Find("TextButton/DateText").GetComponent<Text>();
+        itemDateText.text = currentDate;
 
         // 修改事项 ID
         Text idText = item.transform.Find("IDText").GetComponent<Text>();
@@ -304,8 +310,15 @@ public class GameManager : MonoBehaviour
         deleteButton.onClick.AddListener(delegate
         {
             DataManager.instance.DeleteItemData(int.Parse(idText.text), itemText.text, false);
-            count--;
-            countText.text = $"今天 {count} 件事";
+            
+            string str = itemDateText.text.Substring(0, itemDateText.text.Length - 9);
+
+            if (currentDate.Contains(str))
+            {
+                count--;
+                countText.text = $"今天 {count} 件事";
+            }
+
             Destroy(item);
         });
 
@@ -315,7 +328,7 @@ public class GameManager : MonoBehaviour
 
         // 添加数据
         DataManager.instance.AddItemData(id, itemText.text, false,
-            DateTime.Now.ToString(), DateTime.Now.ToString(), "");
+            currentDate, currentDate, "");
     }
 
     /// <summary>
@@ -412,8 +425,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void ReadDataFromAllItem()
     {
+        string now = DateTime.Now.ToString();
+
         foreach(Item child in DataManager.instance.allItem.items)
         {
+            string str = child.itemCreatedDate.Substring(0, child.itemCreatedDate.Length - 9);
+
             // 实例化事项，并添加到滚动视图中
             GameObject item = Instantiate(itemPrefab, content.transform);
             item.name = "Item";
@@ -422,6 +439,10 @@ public class GameManager : MonoBehaviour
             // 修改事项文本
             Text itemText = item.transform.Find("TextButton/Text").GetComponent<Text>();
             itemText.text = child.itemContent;
+
+            // 修改事项时间文本
+            Text itemDateText = item.transform.Find("TextButton/DateText").GetComponent<Text>();
+            itemDateText.text = child.itemCreatedDate;
 
             // 修改事项 ID
             Text idText = item.transform.Find("IDText").GetComponent<Text>();
@@ -471,14 +492,22 @@ public class GameManager : MonoBehaviour
             deleteButton.onClick.AddListener(delegate
             {
                 DataManager.instance.DeleteItemData(int.Parse(idText.text), itemText.text, false);
-                count--;
-                countText.text = $"今天 {count} 件事";
+
+                if (now.Contains(str))
+                {
+                    count--;
+                    countText.text = $"今天 {count} 件事";
+                }
+                
                 Destroy(item);
             });
 
-            // 修改事项数量
-            count++;
-            countText.text = $"今天 {count} 件事";
+            if (now.Contains(str))
+            {
+                // 修改事项数量
+                count++;
+                countText.text = $"今天 {count} 件事";
+            }
         }
     }
 
