@@ -70,12 +70,16 @@ public class DataManager : MonoBehaviour
     /// <param name="itemID">事项 ID</param>
     /// <param name="itemContent">事项 内容</param>
     /// <param name="itemStatus">事项 状态</param>
-    public void AddItemData(int itemID, string itemContent, bool itemStatus)
+    public void AddItemData(int itemID, string itemContent, bool itemStatus,
+        string itemCreatedDate, string itemModifiedDate, string itemFinishedDate)
     {
         Item itemData = new Item();
         itemData.itemID = itemID;
         itemData.itemContent = itemContent;
         itemData.isFinished = itemStatus;
+        itemData.itemCreatedDate = itemCreatedDate;
+        itemData.itemModifiedDate = itemModifiedDate;
+        itemData.itemFinishedDate = itemFinishedDate;
 
         allItem.items.Add(itemData);
 
@@ -90,7 +94,7 @@ public class DataManager : MonoBehaviour
     /// <param name="itemID">事项 ID</param>
     /// <param name="itemContent">事项 内容</param>
     /// <param name="itemStatus">事项 状态</param>
-    public void ModifyItemData(int itemID, string itemContent, bool itemStatus)
+    public void ModifyItemData(int itemID, string itemContent, bool itemStatus, string itemModifiedDate, string itemFinishedDate)
     {
         foreach(Item child in allItem.items)
         {
@@ -99,6 +103,13 @@ public class DataManager : MonoBehaviour
             {
                 child.itemContent = itemContent;
                 child.isFinished = itemStatus;
+                child.itemModifiedDate = itemModifiedDate;
+
+                // 完成事项时修改完成时间
+                if (itemStatus)
+                {
+                    child.itemFinishedDate = itemFinishedDate;
+                }
             }
         }
 
@@ -177,7 +188,33 @@ public class AllItem
 [Serializable]
 public class Item
 {
+    /// <summary>
+    /// 事项 ID
+    /// </summary>
     public int itemID;
+
+    /// <summary>
+    /// 事项内容
+    /// </summary>
     public string itemContent = "";
+
+    /// <summary>
+    /// 事项完成状态
+    /// </summary>
     public bool isFinished = false;
+
+    /// <summary>
+    /// 事项创建时间
+    /// </summary>
+    public string itemCreatedDate = "";
+
+    /// <summary>
+    /// 事项修改时间
+    /// </summary>
+    public string itemModifiedDate = "";
+
+    /// <summary>
+    /// 事项完成时间
+    /// </summary>
+    public string itemFinishedDate = "";
 }

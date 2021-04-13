@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 /// <summary>
 /// 游戏管理器类
@@ -270,7 +271,8 @@ public class GameManager : MonoBehaviour
             {
                 itemText.text = modifyInputField.text;
                 // 修改数据
-                DataManager.instance.ModifyItemData(int.Parse(idText.text), itemText.text, true);
+                DataManager.instance.ModifyItemData(int.Parse(idText.text), itemText.text, true,
+                    DateTime.Now.ToString(), DateTime.Now.ToString());
             });
             Debug.Log(itemText);
         });
@@ -284,14 +286,16 @@ public class GameManager : MonoBehaviour
                 FinishItem(item);
 
                 // 修改数据
-                DataManager.instance.ModifyItemData(int.Parse(idText.text), itemText.text, true);
+                DataManager.instance.ModifyItemData(int.Parse(idText.text), itemText.text, true,
+                    DateTime.Now.ToString(), DateTime.Now.ToString());
             }
             else
             {
                 RecoverItem(item);
 
                 // 修改数据
-                DataManager.instance.ModifyItemData(int.Parse(idText.text), itemText.text, false);
+                DataManager.instance.ModifyItemData(int.Parse(idText.text), itemText.text, false,
+                    DateTime.Now.ToString(), DateTime.Now.ToString());
             }
         });
 
@@ -310,7 +314,8 @@ public class GameManager : MonoBehaviour
         countText.text = $"今天 {count} 件事";
 
         // 添加数据
-        DataManager.instance.AddItemData(id, itemText.text, false);
+        DataManager.instance.AddItemData(id, itemText.text, false,
+            DateTime.Now.ToString(), DateTime.Now.ToString(), "");
     }
 
     /// <summary>
@@ -432,7 +437,8 @@ public class GameManager : MonoBehaviour
                 {
                     itemText.text = modifyInputField.text;
                     // 修改数据
-                    DataManager.instance.ModifyItemData(int.Parse(idText.text), itemText.text, true);
+                    DataManager.instance.ModifyItemData(int.Parse(idText.text), itemText.text, true,
+                        DateTime.Now.ToString(), DateTime.Now.ToString());
                 });
             });
 
@@ -445,14 +451,16 @@ public class GameManager : MonoBehaviour
                     FinishItem(item);
 
                     // 修改数据
-                    DataManager.instance.ModifyItemData(int.Parse(idText.text), itemText.text, true);
+                    DataManager.instance.ModifyItemData(int.Parse(idText.text), itemText.text, true,
+                        DateTime.Now.ToString(), DateTime.Now.ToString());
                 }
                 else
                 {
                     RecoverItem(item);
 
                     // 修改数据
-                    DataManager.instance.ModifyItemData(int.Parse(idText.text), itemText.text, false);
+                    DataManager.instance.ModifyItemData(int.Parse(idText.text), itemText.text, false,
+                        DateTime.Now.ToString(), DateTime.Now.ToString());
                 }
             });
 
