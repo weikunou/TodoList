@@ -313,7 +313,7 @@ public class ThemeManager : MonoBehaviour
 
         GameManager.instance.isResize = PlayerPrefs.GetString("ResizePlan").Equals("Fix") ? false : true;
         resizeToggleGroup.transform.Find("FixToggle").GetComponent<Toggle>().isOn = false;
-        resizeToggleGroup.transform.Find(PlayerPrefs.GetString("ResizePlan") + "Toggle").GetComponent<Toggle>().isOn = true;
+        resizeToggleGroup.transform.Find(PlayerPrefs.GetString("ResizePlan", "Fix") + "Toggle").GetComponent<Toggle>().isOn = true;
 
         var e = new ColorTheme();
         string[] values = Enum.GetNames(e.GetType());
