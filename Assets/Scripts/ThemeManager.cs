@@ -306,8 +306,14 @@ public class ThemeManager : MonoBehaviour
 
     void Start()
     {
-        // 默认黑色主题
-        ChooseColorTheme(ColorTheme.Dark);
+        // 默认上次的主题
+        ChooseColorTheme((ColorTheme)Enum.Parse(typeof(ColorTheme), PlayerPrefs.GetString("ColorTheme", "Dark")));
+        colorToggleGroup.transform.Find("DarkToggle").GetComponent<Toggle>().isOn = false;
+        colorToggleGroup.transform.Find(PlayerPrefs.GetString("ColorTheme", "Dark") + "Toggle").GetComponent<Toggle>().isOn = true;
+
+        GameManager.instance.isResize = PlayerPrefs.GetString("ResizePlan").Equals("Fix") ? false : true;
+        resizeToggleGroup.transform.Find("FixToggle").GetComponent<Toggle>().isOn = false;
+        resizeToggleGroup.transform.Find(PlayerPrefs.GetString("ResizePlan") + "Toggle").GetComponent<Toggle>().isOn = true;
 
         var e = new ColorTheme();
         string[] values = Enum.GetNames(e.GetType());
@@ -326,6 +332,8 @@ public class ThemeManager : MonoBehaviour
                     string colorStr = child.name.Split('T')[0];
 
                     ChooseColorTheme((ColorTheme)Enum.Parse(typeof(ColorTheme), colorStr));
+
+                    PlayerPrefs.SetString("ColorTheme", colorStr);
                 }
             });
         }
@@ -351,6 +359,8 @@ public class ThemeManager : MonoBehaviour
                     {
                         GameManager.instance.isResize = true;
                     }
+
+                    PlayerPrefs.SetString("ResizePlan", resizeStr);
                 }
             });
         }
@@ -476,6 +486,7 @@ public class ThemeManager : MonoBehaviour
             }
             
             child.Find("TextButton/Text").GetComponent<Text>().color = textColor;
+            child.Find("TextButton/DateText").GetComponent<Text>().color = textColor;
             child.Find("Toggle").GetComponent<Toggle>().colors = cb;
             child.Find("DeleteButton").GetComponent<Button>().colors = cb;
             child.Find("DeleteButton/Text").GetComponent<Text>().color = textColor;
