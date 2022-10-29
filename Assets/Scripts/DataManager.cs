@@ -7,13 +7,8 @@ using System.IO;
 /// <summary>
 /// 数据管理器类
 /// </summary>
-public class DataManager : MonoBehaviour
+public class DataManager : Singleton<DataManager>
 {
-    /// <summary>
-    /// 单例
-    /// </summary>
-    public static DataManager instance;
-
     /// <summary>
     /// 所有的事项
     /// </summary>
@@ -25,20 +20,6 @@ public class DataManager : MonoBehaviour
     string json;
 
     string path;
-
-    #region 生命周期函数
-
-    void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
 
     void Start()
     {
@@ -54,15 +35,6 @@ public class DataManager : MonoBehaviour
         ReadJson();
         TransformToAllItem();
     }
-
-    void Update()
-    {
-        
-    }
-
-    #endregion
-
-    #region 自定义函数
 
     /// <summary>
     /// 添加事项数据
@@ -175,8 +147,6 @@ public class DataManager : MonoBehaviour
     {
         allItem = JsonUtility.FromJson<AllItem>(json);
     }
-
-#endregion
 }
 
 /// <summary>

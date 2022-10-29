@@ -7,10 +7,8 @@ using System;
 /// <summary>
 /// 游戏管理器类
 /// </summary>
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-    #region public 字段
-
     public static GameManager instance;
 
     /// <summary>
@@ -92,10 +90,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public Color itemFinishedColor;
 
-    #endregion
-
-    #region private 字段
-
     /// <summary>
     /// 事项是否显示
     /// </summary>
@@ -131,22 +125,6 @@ public class GameManager : MonoBehaviour
 
     bool setOnce = true;
     bool setTwoOnce = true;
-
-    #endregion
-
-    #region 生命周期函数
-
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
 
     void Start()
     {
@@ -207,10 +185,6 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
-    #endregion
-
-    #region 自定义函数
 
     public void ChangePreScreenSize()
     {
@@ -277,7 +251,7 @@ public class GameManager : MonoBehaviour
             {
                 itemText.text = modifyInputField.text;
                 // 修改数据
-                DataManager.instance.ModifyItemData(int.Parse(idText.text), itemText.text, true,
+                DataManager.Instance.ModifyItemData(int.Parse(idText.text), itemText.text, true,
                     DateTime.Now.ToString(), DateTime.Now.ToString());
             });
             Debug.Log(itemText);
@@ -292,7 +266,7 @@ public class GameManager : MonoBehaviour
                 FinishItem(item);
 
                 // 修改数据
-                DataManager.instance.ModifyItemData(int.Parse(idText.text), itemText.text, true,
+                DataManager.Instance.ModifyItemData(int.Parse(idText.text), itemText.text, true,
                     DateTime.Now.ToString(), DateTime.Now.ToString());
             }
             else
@@ -300,7 +274,7 @@ public class GameManager : MonoBehaviour
                 RecoverItem(item);
 
                 // 修改数据
-                DataManager.instance.ModifyItemData(int.Parse(idText.text), itemText.text, false,
+                DataManager.Instance.ModifyItemData(int.Parse(idText.text), itemText.text, false,
                     DateTime.Now.ToString(), DateTime.Now.ToString());
             }
         });
@@ -309,7 +283,7 @@ public class GameManager : MonoBehaviour
         Button deleteButton = item.transform.Find("DeleteButton").GetComponent<Button>();
         deleteButton.onClick.AddListener(delegate
         {
-            DataManager.instance.DeleteItemData(int.Parse(idText.text), itemText.text, false);
+            DataManager.Instance.DeleteItemData(int.Parse(idText.text), itemText.text, false);
             
             string str = itemDateText.text.Substring(0, itemDateText.text.Length - 9);
 
@@ -327,7 +301,7 @@ public class GameManager : MonoBehaviour
         countText.text = $"今天 {count} 件事";
 
         // 添加数据
-        DataManager.instance.AddItemData(id, itemText.text, false,
+        DataManager.Instance.AddItemData(id, itemText.text, false,
             currentDate, currentDate, "");
     }
 
@@ -427,7 +401,7 @@ public class GameManager : MonoBehaviour
     {
         string now = DateTime.Now.ToString();
 
-        foreach(Item child in DataManager.instance.allItem.items)
+        foreach(Item child in DataManager.Instance.allItem.items)
         {
             string str = child.itemCreatedDate.Substring(0, child.itemCreatedDate.Length - 9);
 
@@ -458,7 +432,7 @@ public class GameManager : MonoBehaviour
                 {
                     itemText.text = modifyInputField.text;
                     // 修改数据
-                    DataManager.instance.ModifyItemData(int.Parse(idText.text), itemText.text, true,
+                    DataManager.Instance.ModifyItemData(int.Parse(idText.text), itemText.text, true,
                         DateTime.Now.ToString(), DateTime.Now.ToString());
                 });
             });
@@ -472,7 +446,7 @@ public class GameManager : MonoBehaviour
                     FinishItem(item);
 
                     // 修改数据
-                    DataManager.instance.ModifyItemData(int.Parse(idText.text), itemText.text, true,
+                    DataManager.Instance.ModifyItemData(int.Parse(idText.text), itemText.text, true,
                         DateTime.Now.ToString(), DateTime.Now.ToString());
                 }
                 else
@@ -480,7 +454,7 @@ public class GameManager : MonoBehaviour
                     RecoverItem(item);
 
                     // 修改数据
-                    DataManager.instance.ModifyItemData(int.Parse(idText.text), itemText.text, false,
+                    DataManager.Instance.ModifyItemData(int.Parse(idText.text), itemText.text, false,
                         DateTime.Now.ToString(), DateTime.Now.ToString());
                 }
             });
@@ -491,7 +465,7 @@ public class GameManager : MonoBehaviour
             Button deleteButton = item.transform.Find("DeleteButton").GetComponent<Button>();
             deleteButton.onClick.AddListener(delegate
             {
-                DataManager.instance.DeleteItemData(int.Parse(idText.text), itemText.text, false);
+                DataManager.Instance.DeleteItemData(int.Parse(idText.text), itemText.text, false);
 
                 if (now.Contains(str))
                 {
@@ -510,6 +484,4 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
-    #endregion
 }

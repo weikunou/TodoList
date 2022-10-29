@@ -33,7 +33,7 @@ public enum ColorTheme
 /// <summary>
 /// 主题管理器类
 /// </summary>
-public class ThemeManager : MonoBehaviour
+public class ThemeManager : Singleton<ThemeManager>
 {
     #region 白色主题配色
 
@@ -311,7 +311,7 @@ public class ThemeManager : MonoBehaviour
         colorToggleGroup.transform.Find("DarkToggle").GetComponent<Toggle>().isOn = false;
         colorToggleGroup.transform.Find(PlayerPrefs.GetString("ColorTheme", "Dark") + "Toggle").GetComponent<Toggle>().isOn = true;
 
-        GameManager.instance.isResize = PlayerPrefs.GetString("ResizePlan").Equals("Fix") ? false : true;
+        GameManager.Instance.isResize = PlayerPrefs.GetString("ResizePlan").Equals("Fix") ? false : true;
         resizeToggleGroup.transform.Find("FixToggle").GetComponent<Toggle>().isOn = false;
         resizeToggleGroup.transform.Find(PlayerPrefs.GetString("ResizePlan", "Fix") + "Toggle").GetComponent<Toggle>().isOn = true;
 
@@ -353,11 +353,11 @@ public class ThemeManager : MonoBehaviour
 
                     if (resizeStr.Equals("Fix"))
                     {
-                        GameManager.instance.isResize = false;
+                        GameManager.Instance.isResize = false;
                     }
                     else
                     {
-                        GameManager.instance.isResize = true;
+                        GameManager.Instance.isResize = true;
                     }
 
                     PlayerPrefs.SetString("ResizePlan", resizeStr);
@@ -454,14 +454,14 @@ public class ThemeManager : MonoBehaviour
         modifyInputField.transform.Find("Placeholder").GetComponent<Text>().color = textColor;
         modifyInputField.transform.Find("Text").GetComponent<Text>().color = textColor;
 
-        GameManager.instance.itemPrefab = itemPrefab;
-        GameManager.instance.itemColor = itemColor;
-        GameManager.instance.itemFinishedColor = itemFinishedColor;
-        GameManager.instance.mainButton.colors = cb;
-        GameManager.instance.settingButton.colors = cb;
-        GameManager.instance.mainButton.transform.Find("Text").GetComponent<Text>().color = textColor;
-        GameManager.instance.settingButton.transform.Find("Text").GetComponent<Text>().color = textColor;
-        GameManager.instance.settingPanel.GetComponent<Image>().color = imageColor;
+        GameManager.Instance.itemPrefab = itemPrefab;
+        GameManager.Instance.itemColor = itemColor;
+        GameManager.Instance.itemFinishedColor = itemFinishedColor;
+        GameManager.Instance.mainButton.colors = cb;
+        GameManager.Instance.settingButton.colors = cb;
+        GameManager.Instance.mainButton.transform.Find("Text").GetComponent<Text>().color = textColor;
+        GameManager.Instance.settingButton.transform.Find("Text").GetComponent<Text>().color = textColor;
+        GameManager.Instance.settingPanel.GetComponent<Image>().color = imageColor;
 
         settingTitle.color = textColor;
         colorToggleGroup.GetComponent<Image>().color = imageColor;
@@ -469,14 +469,14 @@ public class ThemeManager : MonoBehaviour
         resizeToggleGroup.GetComponent<Image>().color = imageColor;
         resizeToggleGroup.transform.Find("TitleText").GetComponent<Text>().color = textColor;
 
-        foreach (Transform child in GameManager.instance.content.transform)
+        foreach (Transform child in GameManager.Instance.content.transform)
         {
             if (child.name.Equals("FinishedButton"))
             {
                 continue;
             }
 
-            if (child.GetSiblingIndex() < GameManager.instance.finishedButton.transform.GetSiblingIndex())
+            if (child.GetSiblingIndex() < GameManager.Instance.finishedButton.transform.GetSiblingIndex())
             {
                 child.GetComponent<Image>().color = itemColor;
             }
