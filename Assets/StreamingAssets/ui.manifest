@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2970725462
+CRC: 3081328846
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 99dadee247023fce9fbed4e0dd2bafae
+    Hash: 1e53502213c2dff3b717d6cf7f602d3e
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 515ac53634bdab93bae898c62fb2baaf
+    Hash: a8ffd3a3601d254d40f2e97961544e55
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -18,17 +18,29 @@ ClassTypes:
 - Class: 48
   Script: {instanceID: 0}
 - Class: 114
+  Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2fafe2cfe61f6974895a912c3755e8f1, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 436f75b1fd668dc409d3a5241e2582f8, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 34ce9d460320056469c7b6df80e5193b, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: 2fafe2cfe61f6974895a912c3755e8f1, type: 3}
+  Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 128
@@ -40,6 +52,7 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
+- Assets/GameRes/Prefabs/UI/PnlNewItem.prefab
 - Assets/GameRes/Prefabs/UI/PnlSettings.prefab
 Dependencies:
 - C:/Projects/Unity/TodoList/AssetBundles/Android/font
