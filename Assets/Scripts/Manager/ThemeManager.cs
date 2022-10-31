@@ -308,62 +308,7 @@ public class ThemeManager : Singleton<ThemeManager>
     {
         // 默认上次的主题
         ChooseColorTheme((ColorTheme)Enum.Parse(typeof(ColorTheme), PlayerPrefs.GetString("ColorTheme", "Dark")));
-        colorToggleGroup.transform.Find("DarkToggle").GetComponent<Toggle>().isOn = false;
-        colorToggleGroup.transform.Find(PlayerPrefs.GetString("ColorTheme", "Dark") + "Toggle").GetComponent<Toggle>().isOn = true;
-
         GameManager.Instance.isResize = PlayerPrefs.GetString("ResizePlan").Equals("Fix") ? false : true;
-        resizeToggleGroup.transform.Find("FixToggle").GetComponent<Toggle>().isOn = false;
-        resizeToggleGroup.transform.Find(PlayerPrefs.GetString("ResizePlan", "Fix") + "Toggle").GetComponent<Toggle>().isOn = true;
-
-        var e = new ColorTheme();
-        string[] values = Enum.GetNames(e.GetType());
-
-        foreach(Transform child in colorToggleGroup.transform)
-        {
-            if (child.name.Equals("TitleText"))
-            {
-                continue;
-            }
-
-            child.GetComponent<Toggle>().onValueChanged.AddListener(delegate
-            {
-                if (child.GetComponent<Toggle>().isOn)
-                {
-                    string colorStr = child.name.Split('T')[0];
-
-                    ChooseColorTheme((ColorTheme)Enum.Parse(typeof(ColorTheme), colorStr));
-
-                    PlayerPrefs.SetString("ColorTheme", colorStr);
-                }
-            });
-        }
-
-        foreach (Transform child in resizeToggleGroup.transform)
-        {
-            if (child.name.Equals("TitleText"))
-            {
-                continue;
-            }
-
-            child.GetComponent<Toggle>().onValueChanged.AddListener(delegate
-            {
-                if (child.GetComponent<Toggle>().isOn)
-                {
-                    string resizeStr = child.name.Split('T')[0];
-
-                    if (resizeStr.Equals("Fix"))
-                    {
-                        GameManager.Instance.isResize = false;
-                    }
-                    else
-                    {
-                        GameManager.Instance.isResize = true;
-                    }
-
-                    PlayerPrefs.SetString("ResizePlan", resizeStr);
-                }
-            });
-        }
     }
 
     void Update()
@@ -457,10 +402,6 @@ public class ThemeManager : Singleton<ThemeManager>
         GameManager.Instance.itemPrefab = itemPrefab;
         GameManager.Instance.itemColor = itemColor;
         GameManager.Instance.itemFinishedColor = itemFinishedColor;
-        GameManager.Instance.mainButton.colors = cb;
-        GameManager.Instance.settingButton.colors = cb;
-        GameManager.Instance.mainButton.transform.Find("Text").GetComponent<Text>().color = textColor;
-        GameManager.Instance.settingButton.transform.Find("Text").GetComponent<Text>().color = textColor;
         GameManager.Instance.settingPanel.GetComponent<Image>().color = imageColor;
 
         settingTitle.color = textColor;
