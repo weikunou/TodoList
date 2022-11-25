@@ -7,19 +7,17 @@ using UnityEngine.UI;
 public class PnlNewItem : MonoBehaviour
 {
     InputField inputField;
-    Button mask, btnCancel, btnConfirm;
+    Button btnCancel, btnConfirm;
 
     private void Awake()
     {
         inputField = transform.Find("Popup/InputField").GetComponent<InputField>();
-        mask = transform.Find("Mask").GetComponent<Button>();
         btnCancel = transform.Find("Popup/BtnCancel").GetComponent<Button>();
         btnConfirm = transform.Find("Popup/BtnConfirm").GetComponent<Button>();
     }
 
     private void Start()
     {
-        mask.onClick.AddListener(()=>{ ClosePanel(); });
         btnCancel.onClick.AddListener(()=>{ ClosePanel(); });
         btnConfirm.onClick.AddListener(()=>{ AddNewItem(); });
     }

@@ -6,13 +6,12 @@ using UnityEngine.UI;
 
 public class PnlSettings : MonoBehaviour
 {
-    Button pnlSettings, btnClsoe;
+    Button btnClsoe;
 
     Transform colorGroup, resizeGroup;
 
     private void Awake()
     {
-        pnlSettings = transform.GetComponent<Button>();
         btnClsoe = transform.Find("Popup/BtnClose").GetComponent<Button>();
 
         colorGroup = transform.Find("Popup/Scroll View/Viewport/Content/ColorGroup");
@@ -21,7 +20,6 @@ public class PnlSettings : MonoBehaviour
 
     private void Start()
     {
-        pnlSettings.onClick.AddListener(()=>{ ClosePanel(); });
         btnClsoe.onClick.AddListener(()=>{ ClosePanel(); });
 
         for(int i = 0; i < colorGroup.childCount; i++)
