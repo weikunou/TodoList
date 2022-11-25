@@ -30,10 +30,8 @@ public class PnlMain : MonoBehaviour
 
     private void Awake()
     {
-        textToday = transform.Find("TopSection/TextToday").GetComponent<Text>();
-
+        textToday = transform.Find("TopSection/TextToday").GetComponent<Text>(); 
         
-        btnSettings = transform.Find("TopSection/BtnSettings").GetComponent<Button>();
         btnFinished = transform.Find("MiddleSection/Scroll View/Viewport/Content/BtnFinished").GetComponent<Button>();
 
         btnMain = transform.Find("BottomSection/BtnMain").GetComponent<Button>();
@@ -49,7 +47,7 @@ public class PnlMain : MonoBehaviour
     private void Start()
     {
         btnAdd.onClick.AddListener(()=>{ OpenNewItem(); });
-        btnSettings.onClick.AddListener(()=>{ OpenSettings(); });
+        
         btnFinished.onClick.AddListener(()=>{ ShowOrHideFinishedItem(); });
         btnMain.onClick.AddListener(()=>{ ChangePanel(EnumType.UIPanel.PnlMain); });
         btnSelf.onClick.AddListener(()=>{ ChangePanel(EnumType.UIPanel.PnlSelf); });
@@ -73,14 +71,25 @@ public class PnlMain : MonoBehaviour
         UIManager.Instance.CreatePanel(EnumType.UIPanel.PnlNewItem, UIManager.Instance.TopCanvas);
     }
 
-    private void OpenSettings()
-    {
-        UIManager.Instance.CreatePanel(EnumType.UIPanel.PnlSettings, UIManager.Instance.TopCanvas);
-    }
-
     private void ChangePanel(EnumType.UIPanel panel)
     {
-
+        GameObject selfPanel = UIManager.Instance.GetPanel(EnumType.UIPanel.PnlSelf);
+        switch(panel)
+        {
+            case EnumType.UIPanel.PnlMain:
+                selfPanel?.SetActive(false);
+                break;
+            case EnumType.UIPanel.PnlSelf:
+                if(selfPanel == null)
+                {
+                    UIManager.Instance.CreatePanel(EnumType.UIPanel.PnlSelf, UIManager.Instance.MainCanvas);
+                }
+                else
+                {
+                    selfPanel.SetActive(true);
+                }
+                break;
+        }
     }
 
     private void OnAddNewItemEvent(string text)

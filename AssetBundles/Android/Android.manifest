@@ -1,11 +1,15 @@
 ManifestFileVersion: 0
-CRC: 1160262822
+CRC: 432519657
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
       Name: ui
       Dependencies:
         Dependency_0: font
+        Dependency_1: texture
     Info_1:
       Name: font
+      Dependencies: {}
+    Info_2:
+      Name: texture
       Dependencies: {}

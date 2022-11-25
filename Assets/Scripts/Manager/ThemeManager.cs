@@ -241,7 +241,7 @@ public class ThemeManager : Singleton<ThemeManager>
     /// 滚动视图
     /// </summary>
     [Header("组件")]
-    public Image scrollView;
+    // public Image scrollView;
 
     /// <summary>
     /// 内层滚动视图
@@ -369,8 +369,8 @@ public class ThemeManager : Singleton<ThemeManager>
         GameObject itemPrefab, Color itemColor, Color itemFinishedColor)
     {
         Camera.main.backgroundColor = imageColor;
-        scrollView.color = imageColor;
-        scrollViewInner.color = imageColor;
+        // scrollView.color = imageColor;
+        // scrollViewInner.color = imageColor;
         scrollViewSetting.color = imageColor;
         mainPanel.color = imageColor;
         titleText.color = textColor;

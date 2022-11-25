@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2902573399
+CRC: 2769867126
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 48134d57b490b61e4bd96af3a8bf5a72
+    Hash: 6d012dc34a62092fb46936bf30ad6284
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 9465ccc60561793eeb1fd2c1425519dd
+    Hash: 9c1a48846deff4ec48286888f3658177
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -47,6 +47,8 @@ ClassTypes:
   Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 436f75b1fd668dc409d3a5241e2582f8, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ca476f05b41f24a43bd5496fb0410716, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 128
@@ -89,7 +91,9 @@ SerializeReferenceClassIdentifiers:
 Assets:
 - Assets/GameRes/Prefabs/UI/Item.prefab
 - Assets/GameRes/Prefabs/UI/PnlNewItem.prefab
+- Assets/GameRes/Prefabs/UI/PnlSelf.prefab
 - Assets/GameRes/Prefabs/UI/PnlSettings.prefab
 - Assets/GameRes/Prefabs/UI/PnlMain.prefab
 Dependencies:
 - C:/Projects/Unity/TodoList/AssetBundles/Android/font
+- C:/Projects/Unity/TodoList/AssetBundles/Android/texture

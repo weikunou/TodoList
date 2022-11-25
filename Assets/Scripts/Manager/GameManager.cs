@@ -108,7 +108,7 @@ public class GameManager : Singleton<GameManager>
 
     // public GameObject bottomSection;
 
-    public GameObject outerContent;
+    // public GameObject outerContent;
 
     public bool isResize;
 
@@ -176,10 +176,10 @@ public class GameManager : Singleton<GameManager>
 
     public void ChangePreScreenSize()
     {
-        outerContent.GetComponent<RectTransform>().anchorMin = new Vector2(0, 1);
-        outerContent.GetComponent<RectTransform>().anchorMax = new Vector2(1, 1);
-        outerContent.GetComponent<RectTransform>().offsetMin = new Vector2(0, -1920f);
-        outerContent.GetComponent<RectTransform>().offsetMax = new Vector2(0, 0);
+        // outerContent.GetComponent<RectTransform>().anchorMin = new Vector2(0, 1);
+        // outerContent.GetComponent<RectTransform>().anchorMax = new Vector2(1, 1);
+        // outerContent.GetComponent<RectTransform>().offsetMin = new Vector2(0, -1920f);
+        // outerContent.GetComponent<RectTransform>().offsetMax = new Vector2(0, 0);
 
         // topSection.GetComponent<RectTransform>().offsetMin = new Vector2(0, 1550f);
         // bottomSection.GetComponent<RectTransform>().offsetMax = new Vector2(0, -1820f);
@@ -187,10 +187,10 @@ public class GameManager : Singleton<GameManager>
 
     public void ChangeScreenSize()
     {
-        outerContent.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
-        outerContent.GetComponent<RectTransform>().anchorMax = new Vector2(1, 1);
-        outerContent.GetComponent<RectTransform>().offsetMin = new Vector2(0, 0);
-        outerContent.GetComponent<RectTransform>().offsetMax = new Vector2(0, 0);
+        // outerContent.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
+        // outerContent.GetComponent<RectTransform>().anchorMax = new Vector2(1, 1);
+        // outerContent.GetComponent<RectTransform>().offsetMin = new Vector2(0, 0);
+        // outerContent.GetComponent<RectTransform>().offsetMax = new Vector2(0, 0);
 
         // factor = screenWidth / preScreenWidth;
         // topSection.GetComponent<RectTransform>().offsetMin = new Vector2(0, screenHeight / factor - 370);

@@ -10,17 +10,15 @@ public class UIManager : Singleton<UIManager>
 
     private Transform topCanvas;
 
-    private Transform content;
-
+    public Transform MainCanvas { get { return mainCanvas; } }
     public Transform TopCanvas { get { return topCanvas; } }
 
     private void Start()
     {
         mainCanvas = transform.Find("MainCanvas");
         topCanvas = transform.Find("TopCanvas");
-        content = mainCanvas.Find("Scroll View/Viewport/Content");
 
-        CreatePanel(EnumType.UIPanel.PnlMain, content);
+        CreatePanel(EnumType.UIPanel.PnlMain, mainCanvas);
     }
 
     public void CreatePanel(EnumType.UIPanel uiPanel, Transform parent)
