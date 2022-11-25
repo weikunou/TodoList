@@ -40,9 +40,13 @@ public class ResManager : Singleton<ResManager>
 
     public T LoadRes<T>(string abName, string resName) where T : Object
     {
+        #if UNITY_EDITOR
+        return UnityEditor.AssetDatabase.LoadAssetAtPath<T>("Assets/GameRes/Prefabs/UI/" + resName + ".prefab");
+        #else
         LoadAB(abName);
         // 加载资源
         return abDic[abName].LoadAsset<T>(resName);
+        #endif
     }
 
     public void LoadResAsync<T>(string abName, string resName, UnityAction<T> callback) where T : Object

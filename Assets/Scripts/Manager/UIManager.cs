@@ -19,6 +19,8 @@ public class UIManager : Singleton<UIManager>
         mainCanvas = transform.Find("MainCanvas");
         topCanvas = transform.Find("TopCanvas");
         content = mainCanvas.Find("Scroll View/Viewport/Content");
+
+        CreatePanel(EnumType.UIPanel.PnlMain, content);
     }
 
     public void CreatePanel(EnumType.UIPanel uiPanel, Transform parent)

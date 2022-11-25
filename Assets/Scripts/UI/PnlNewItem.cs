@@ -7,19 +7,19 @@ using UnityEngine.UI;
 public class PnlNewItem : MonoBehaviour
 {
     InputField inputField;
-    Button pnlNewItem, btnCancel, btnConfirm;
+    Button mask, btnCancel, btnConfirm;
 
     private void Awake()
     {
         inputField = transform.Find("Popup/InputField").GetComponent<InputField>();
-        pnlNewItem = transform.GetComponent<Button>();
+        mask = transform.Find("Mask").GetComponent<Button>();
         btnCancel = transform.Find("Popup/BtnCancel").GetComponent<Button>();
         btnConfirm = transform.Find("Popup/BtnConfirm").GetComponent<Button>();
     }
 
     private void Start()
     {
-        pnlNewItem.onClick.AddListener(()=>{ ClosePanel(); });
+        mask.onClick.AddListener(()=>{ ClosePanel(); });
         btnCancel.onClick.AddListener(()=>{ ClosePanel(); });
         btnConfirm.onClick.AddListener(()=>{ AddNewItem(); });
     }
@@ -33,8 +33,8 @@ public class PnlNewItem : MonoBehaviour
             return;
         }
 
-        // 添加待办事项
-        GameManager.Instance.AddItem(inputField.text);
+        // 触发添加待办事项事件
+        EventHandler.CallAddNewItemEvent(inputField.text);
 
         // 关闭弹窗
         ClosePanel();
