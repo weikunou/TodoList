@@ -1691,10 +1691,7 @@ MonoBehaviour:
   pinkItemFinishedColor: {r: 0.7169812, g: 0.38216448, b: 0.49240905, a: 1}
   pinkItemPrefab: {fileID: 4305361089801223756, guid: 9e38d1f964ff4bf48902ab06644c7026,
     type: 3}
-  scrollViewInner: {fileID: 0}
   scrollViewSetting: {fileID: 360602889}
-  mainPanel: {fileID: 0}
-  finishedButton: {fileID: 0}
   settingTitle: {fileID: 1746468980}
   colorToggleGroup: {fileID: 661206920}
   resizeToggleGroup: {fileID: 1766178149}
@@ -2050,8 +2047,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4fefe4288b4a404db3ff7a877dcf27f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  finishedButton: {fileID: 0}
-  content: {fileID: 0}
   settingPanel: {fileID: 1194124032}
   itemPrefab: {fileID: 4305361089801223756, guid: 702e7ca59f265174f83d90430097574e,
     type: 3}

@@ -8,4 +8,11 @@ public static class EventHandler
     {
         AddNewItemEvent?.Invoke(text);
     }
+
+    public static event Action<string> ModifyInfoEvent;
+
+    public static void CallModifyInfoEvent(string text)
+    {
+        ModifyInfoEvent?.Invoke(text);
+    }
 }
