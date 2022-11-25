@@ -8,11 +8,9 @@ public class PnlMain : MonoBehaviour
 {
     Text textToday;
     Button btnAdd, btnSettings, btnFinished, btnMain, btnSelf;
-    InputField modifyInputField;
 
     Transform content;
     GameObject itemPrefab;
-    GameObject modifyPanel;
 
     int id;
     int count;
@@ -31,16 +29,10 @@ public class PnlMain : MonoBehaviour
     private void Awake()
     {
         textToday = transform.Find("TopSection/TextToday").GetComponent<Text>(); 
-        
         btnFinished = transform.Find("MiddleSection/Scroll View/Viewport/Content/BtnFinished").GetComponent<Button>();
-
         btnMain = transform.Find("BottomSection/BtnMain").GetComponent<Button>();
         btnAdd = transform.Find("BottomSection/BtnAdd").GetComponent<Button>();
         btnSelf = transform.Find("BottomSection/BtnSelf").GetComponent<Button>();
-
-        modifyInputField = transform.Find("MiddleSection/ModifyPanel/InputField").GetComponent<InputField>();
-        modifyPanel = transform.Find("MiddleSection/ModifyPanel").gameObject;
-
         content = transform.Find("MiddleSection/Scroll View/Viewport/Content");
     }
 
@@ -54,6 +46,7 @@ public class PnlMain : MonoBehaviour
 
         itemPrefab = ResManager.Instance.LoadRes<GameObject>("ui", "Item");
         id = PlayerPrefs.GetInt("ID", 0);
+        ReadDataFromAllItem();
     }
 
     private void OnEnable()
@@ -119,16 +112,7 @@ public class PnlMain : MonoBehaviour
         Button textButton = item.transform.Find("TextButton").GetComponent<Button>();
         textButton.onClick.AddListener(delegate
         {
-            ShowTheModifyTextWindow();
-            modifyInputField.text = itemText.text;
-            modifyInputField.onValueChanged.AddListener(delegate
-            {
-                itemText.text = modifyInputField.text;
-                // 修改数据
-                DataManager.Instance.ModifyItemData(int.Parse(idText.text), itemText.text, true,
-                    DateTime.Now.ToString(), DateTime.Now.ToString());
-            });
-            Debug.Log(itemText);
+
         });
 
         // 修改开关
@@ -212,10 +196,85 @@ public class PnlMain : MonoBehaviour
     }
 
     /// <summary>
-    /// 显示修改事项文本窗口
+    /// 从 allItem 里读取事项
     /// </summary>
-    void ShowTheModifyTextWindow()
+    void ReadDataFromAllItem()
     {
-        modifyPanel.SetActive(true);
+        string now = DateTime.Now.ToString();
+
+        foreach(Item child in DataManager.Instance.allItem.items)
+        {
+            string str = child.itemCreatedDate.Substring(0, child.itemCreatedDate.Length - 9);
+
+            // 实例化事项，并添加到滚动视图中
+            GameObject item = Instantiate(itemPrefab, content.transform);
+            item.name = "Item";
+            item.transform.SetAsFirstSibling();
+
+            // 修改事项文本
+            Text itemText = item.transform.Find("TextButton/Text").GetComponent<Text>();
+            itemText.text = child.itemContent;
+
+            // 修改事项时间文本
+            Text itemDateText = item.transform.Find("TextButton/DateText").GetComponent<Text>();
+            itemDateText.text = child.itemCreatedDate;
+
+            // 修改事项 ID
+            Text idText = item.transform.Find("IDText").GetComponent<Text>();
+            idText.text = child.itemID.ToString();
+
+            // 修改事项文本按钮
+            Button textButton = item.transform.Find("TextButton").GetComponent<Button>();
+            textButton.onClick.AddListener(delegate
+            {
+
+            });
+
+            // 修改开关
+            Toggle toggleButton = item.transform.Find("Toggle").GetComponent<Toggle>();
+            toggleButton.onValueChanged.AddListener(delegate
+            {
+                if (toggleButton.isOn)
+                {
+                    FinishItem(item);
+
+                    // 修改数据
+                    DataManager.Instance.ModifyItemData(int.Parse(idText.text), itemText.text, true,
+                        DateTime.Now.ToString(), DateTime.Now.ToString());
+                }
+                else
+                {
+                    RecoverItem(item);
+
+                    // 修改数据
+                    DataManager.Instance.ModifyItemData(int.Parse(idText.text), itemText.text, false,
+                        DateTime.Now.ToString(), DateTime.Now.ToString());
+                }
+            });
+
+            toggleButton.isOn = child.isFinished;
+
+            // 修改删除按钮
+            Button deleteButton = item.transform.Find("DeleteButton").GetComponent<Button>();
+            deleteButton.onClick.AddListener(delegate
+            {
+                DataManager.Instance.DeleteItemData(int.Parse(idText.text), itemText.text, false);
+
+                if (now.Contains(str))
+                {
+                    count--;
+                    textToday.text = $"今天 {count} 件事";
+                }
+                
+                Destroy(item);
+            });
+
+            if (now.Contains(str))
+            {
+                // 修改事项数量
+                count++;
+                textToday.text = $"今天 {count} 件事";
+            }
+        }
     }
 }

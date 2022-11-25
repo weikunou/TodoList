@@ -238,60 +238,9 @@ public class ThemeManager : Singleton<ThemeManager>
     #region 改变颜色的组件
 
     /// <summary>
-    /// 滚动视图
-    /// </summary>
-    [Header("组件")]
-    // public Image scrollView;
-
-    /// <summary>
-    /// 内层滚动视图
-    /// </summary>
-    public Image scrollViewInner;
-
-    /// <summary>
     /// 设置窗口滚动视图
     /// </summary>
     public Image scrollViewSetting;
-
-    /// <summary>
-    /// 主窗口
-    /// </summary>
-    public Image mainPanel;
-
-    /// <summary>
-    /// 标题文本
-    /// </summary>
-    public Text titleText;
-
-    /// <summary>
-    /// 数量文本
-    /// </summary>
-    public Text countText;
-
-    /// <summary>
-    /// 添加事项按钮
-    /// </summary>
-    public Button addItemButton;
-
-    /// <summary>
-    /// 搜索事项按钮
-    /// </summary>
-    public Button searchItemButton;
-
-    /// <summary>
-    /// 文本输入框
-    /// </summary>
-    public InputField inputField;
-
-    /// <summary>
-    /// 已完成按钮
-    /// </summary>
-    public Button finishedButton;
-
-    /// <summary>
-    /// 修改窗口的文本输入框
-    /// </summary>
-    public InputField modifyInputField;
 
     /// <summary>
     /// 设置窗口的标题
@@ -308,12 +257,6 @@ public class ThemeManager : Singleton<ThemeManager>
     {
         // 默认上次的主题
         ChooseColorTheme((ColorTheme)Enum.Parse(typeof(ColorTheme), PlayerPrefs.GetString("ColorTheme", "Dark")));
-        GameManager.Instance.isResize = PlayerPrefs.GetString("ResizePlan").Equals("Fix") ? false : true;
-    }
-
-    void Update()
-    {
-        
     }
 
     /// <summary>
@@ -368,14 +311,6 @@ public class ThemeManager : Singleton<ThemeManager>
         Color buttonNormalColor, Color buttonHighlightedColor, Color buttonPressColor, Color buttonSelectedColor,
         GameObject itemPrefab, Color itemColor, Color itemFinishedColor)
     {
-        Camera.main.backgroundColor = imageColor;
-        // scrollView.color = imageColor;
-        // scrollViewInner.color = imageColor;
-        scrollViewSetting.color = imageColor;
-        mainPanel.color = imageColor;
-        titleText.color = textColor;
-        countText.color = textColor;
-
         ColorBlock cb = new ColorBlock();
         cb.normalColor = buttonNormalColor;
         cb.highlightedColor = buttonHighlightedColor;
@@ -384,24 +319,8 @@ public class ThemeManager : Singleton<ThemeManager>
         cb.colorMultiplier = 1;
         cb.fadeDuration = 0.1f;
 
-        addItemButton.colors = cb;
-        searchItemButton.colors = cb;
-        finishedButton.colors = cb;
-        addItemButton.transform.GetChild(0).GetComponent<Text>().color = textColor;
-        searchItemButton.transform.GetChild(0).GetComponent<Text>().color = textColor;
-        finishedButton.transform.GetChild(0).GetComponent<Text>().color = textColor;
-
-        inputField.colors = cb;
-        inputField.transform.Find("Placeholder").GetComponent<Text>().color = textColor;
-        inputField.transform.Find("Text").GetComponent<Text>().color = textColor;
-
-        modifyInputField.colors = cb;
-        modifyInputField.transform.Find("Placeholder").GetComponent<Text>().color = textColor;
-        modifyInputField.transform.Find("Text").GetComponent<Text>().color = textColor;
-
         GameManager.Instance.itemPrefab = itemPrefab;
         GameManager.Instance.itemColor = itemColor;
-        GameManager.Instance.itemFinishedColor = itemFinishedColor;
         GameManager.Instance.settingPanel.GetComponent<Image>().color = imageColor;
 
         settingTitle.color = textColor;
@@ -409,29 +328,6 @@ public class ThemeManager : Singleton<ThemeManager>
         colorToggleGroup.transform.Find("TitleText").GetComponent<Text>().color = textColor;
         resizeToggleGroup.GetComponent<Image>().color = imageColor;
         resizeToggleGroup.transform.Find("TitleText").GetComponent<Text>().color = textColor;
-
-        foreach (Transform child in GameManager.Instance.content.transform)
-        {
-            if (child.name.Equals("FinishedButton"))
-            {
-                continue;
-            }
-
-            if (child.GetSiblingIndex() < GameManager.Instance.finishedButton.transform.GetSiblingIndex())
-            {
-                child.GetComponent<Image>().color = itemColor;
-            }
-            else
-            {
-                child.GetComponent<Image>().color = itemFinishedColor;
-            }
-            
-            child.Find("TextButton/Text").GetComponent<Text>().color = textColor;
-            child.Find("TextButton/DateText").GetComponent<Text>().color = textColor;
-            child.Find("Toggle").GetComponent<Toggle>().colors = cb;
-            child.Find("DeleteButton").GetComponent<Button>().colors = cb;
-            child.Find("DeleteButton/Text").GetComponent<Text>().color = textColor;
-        }
 
         foreach (Transform child in colorToggleGroup.transform)
         {

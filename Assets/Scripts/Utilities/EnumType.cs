@@ -2,7 +2,7 @@
 {
     public enum UIPanel
     {
-        // 主界面, 设置界面, 添加界面
+        // 主界面, 设置界面, 添加界面, 个人界面
         PnlMain, PnlSettings, PnlNewItem, PnlSelf
     }
 }

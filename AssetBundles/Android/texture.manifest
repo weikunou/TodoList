@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 635199043
+CRC: 1346706804
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 0a6690c3f0e3db1fe7100c5c56f249aa
+    Hash: f0dadd442dd35b1a9c272f81a95b5eea
   TypeTreeHash:
     serializedVersion: 2
     Hash: f267fd2d8bcb1179236b6179ac5313bc
@@ -16,6 +16,7 @@ ClassTypes:
 SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/RawAssets/Sprites/head.jpg
+- Assets/RawAssets/Sprites/popup_common.png
 - Assets/RawAssets/Sprites/banner.jpg
 - Assets/RawAssets/Sprites/button_common.png
 Dependencies: []
