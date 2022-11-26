@@ -235,24 +235,6 @@ public class ThemeManager : Singleton<ThemeManager>
 
     #endregion
 
-    #region 改变颜色的组件
-
-    /// <summary>
-    /// 设置窗口滚动视图
-    /// </summary>
-    public Image scrollViewSetting;
-
-    /// <summary>
-    /// 设置窗口的标题
-    /// </summary>
-    public Text settingTitle;
-
-    #endregion
-
-    public ToggleGroup colorToggleGroup;
-
-    public ToggleGroup resizeToggleGroup;
-
     void Start()
     {
         // 默认上次的主题
@@ -318,37 +300,5 @@ public class ThemeManager : Singleton<ThemeManager>
         cb.selectedColor = buttonSelectedColor;
         cb.colorMultiplier = 1;
         cb.fadeDuration = 0.1f;
-
-        GameManager.Instance.itemPrefab = itemPrefab;
-        GameManager.Instance.itemColor = itemColor;
-        GameManager.Instance.settingPanel.GetComponent<Image>().color = imageColor;
-
-        settingTitle.color = textColor;
-        colorToggleGroup.GetComponent<Image>().color = imageColor;
-        colorToggleGroup.transform.Find("TitleText").GetComponent<Text>().color = textColor;
-        resizeToggleGroup.GetComponent<Image>().color = imageColor;
-        resizeToggleGroup.transform.Find("TitleText").GetComponent<Text>().color = textColor;
-
-        foreach (Transform child in colorToggleGroup.transform)
-        {
-            if (child.name.Equals("TitleText"))
-            {
-                continue;
-            }
-
-            child.GetComponent<Toggle>().colors = cb;
-            child.Find("Label").GetComponent<Text>().color = textColor;
-        }
-
-        foreach (Transform child in resizeToggleGroup.transform)
-        {
-            if (child.name.Equals("TitleText"))
-            {
-                continue;
-            }
-
-            child.GetComponent<Toggle>().colors = cb;
-            child.Find("Label").GetComponent<Text>().color = textColor;
-        }
     }
 }
