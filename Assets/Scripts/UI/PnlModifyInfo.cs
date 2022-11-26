@@ -6,13 +6,14 @@ using UnityEngine.UI;
 public class PnlModifyInfo : MonoBehaviour
 {
     Button btnCancel, btnConfirm;
-    InputField inputName;
+    InputField inputName, inputIntro;
 
     private void Awake()
     {
         btnCancel = transform.Find("Popup/BtnCancel").GetComponent<Button>();
         btnConfirm = transform.Find("Popup/BtnConfirm").GetComponent<Button>();
-        inputName = transform.Find("Popup/InputField").GetComponent<InputField>();
+        inputName = transform.Find("Popup/InputName").GetComponent<InputField>();
+        inputIntro = transform.Find("Popup/InputIntro").GetComponent<InputField>();
     }
 
     private void Start()
@@ -21,6 +22,7 @@ public class PnlModifyInfo : MonoBehaviour
         btnConfirm.onClick.AddListener(()=>{ ModifyInfo(); });
 
         inputName.text = PlayerPrefs.GetString("Name", "用户101");
+        inputIntro.text = PlayerPrefs.GetString("Intro", "这个人什么都没写");
     }
 
     private void ModifyInfo()
@@ -31,7 +33,8 @@ public class PnlModifyInfo : MonoBehaviour
             return;
         }
         PlayerPrefs.SetString("Name", inputName.text);
-        EventHandler.CallModifyInfoEvent(inputName.text);
+        PlayerPrefs.SetString("Intro", inputIntro.text);
+        EventHandler.CallModifyInfoEvent(inputName.text, inputIntro.text);
         ClosePanel();
     }
 
