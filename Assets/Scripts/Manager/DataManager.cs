@@ -59,7 +59,6 @@ public class DataManager : Singleton<DataManager>
         allItem.items.Add(itemData);
 
         json = JsonUtility.ToJson(allItem);
-        Debug.Log("添加 " + json);
         WriteJson();
     }
 
@@ -91,7 +90,6 @@ public class DataManager : Singleton<DataManager>
         }
 
         json = JsonUtility.ToJson(allItem);
-        Debug.Log("修改 " + json);
         WriteJson();
     }
 
@@ -113,8 +111,20 @@ public class DataManager : Singleton<DataManager>
         }
 
         json = JsonUtility.ToJson(allItem);
-        Debug.Log("删除 " + json);
         WriteJson();
+    }
+
+    public int CountNotFinished()
+    {
+        int notFinishedCount = 0;
+        for(int i = 0; i < allItem.items.Count; i++)
+        {
+            if (!allItem.items[i].isFinished)
+            {
+                notFinishedCount++;
+            }
+        }
+        return notFinishedCount;
     }
 
     /// <summary>

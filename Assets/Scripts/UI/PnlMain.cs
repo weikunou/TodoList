@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PnlMain : MonoBehaviour
 {
-    Text textToday;
+    Text textHistory, textToday, textNotFinished;
     Button btnAdd, btnSettings, btnFinished, btnMain, btnSelf;
 
     Transform content;
@@ -28,7 +28,9 @@ public class PnlMain : MonoBehaviour
 
     private void Awake()
     {
-        textToday = transform.Find("TopSection/TextToday").GetComponent<Text>(); 
+        textHistory = transform.Find("TopSection/TextGroup/TextHistory").GetComponent<Text>();
+        textToday = transform.Find("TopSection/TextGroup/TextToday").GetComponent<Text>();
+        textNotFinished = transform.Find("TopSection/TextGroup/TextNotFinished").GetComponent<Text>();
         btnFinished = transform.Find("MiddleSection/Scroll View/Viewport/Content/BtnFinished").GetComponent<Button>();
         btnMain = transform.Find("BottomSection/BtnMain").GetComponent<Button>();
         btnAdd = transform.Find("BottomSection/BtnAdd").GetComponent<Button>();
@@ -138,6 +140,8 @@ public class PnlMain : MonoBehaviour
                 DataManager.Instance.ModifyItemData(int.Parse(idText.text), itemText.text, false,
                     DateTime.Now.ToString(), DateTime.Now.ToString());
             }
+            int notfinishedCount = DataManager.Instance.CountNotFinished();
+            textNotFinished.text = $"待完成 {notfinishedCount} 件事";
         });
 
         // 修改删除按钮
@@ -145,6 +149,12 @@ public class PnlMain : MonoBehaviour
         deleteButton.onClick.AddListener(delegate
         {
             DataManager.Instance.DeleteItemData(int.Parse(idText.text), itemText.text, false);
+
+            int historyCount = DataManager.Instance.allItem.items.Count;
+            textHistory.text = $"历史 {historyCount} 件事";
+
+            int notfinishedCount = DataManager.Instance.CountNotFinished();
+            textNotFinished.text = $"待完成 {notfinishedCount} 件事";
             
             string str = itemDateText.text.Substring(0, itemDateText.text.Length - 9);
 
@@ -164,6 +174,12 @@ public class PnlMain : MonoBehaviour
         // 添加数据
         DataManager.Instance.AddItemData(id, itemText.text, false,
             currentDate, currentDate, "");
+
+        int historyCount = DataManager.Instance.allItem.items.Count;
+        textHistory.text = $"历史 {historyCount} 件事";
+
+        int notfinishedCount = DataManager.Instance.CountNotFinished();
+        textNotFinished.text = $"待完成 {notfinishedCount} 件事";
     }
 
     private void OnModifyColorThemeEvent(string colorTheme)
@@ -230,6 +246,10 @@ public class PnlMain : MonoBehaviour
     /// </summary>
     void ReadDataFromAllItem()
     {
+        int historyCount = DataManager.Instance.allItem.items.Count;
+        textHistory.text = $"历史 {historyCount} 件事";
+        int notfinishedCount = DataManager.Instance.CountNotFinished();
+        textNotFinished.text = $"待完成 {notfinishedCount} 件事";
         string now = DateTime.Now.ToString();
 
         foreach(Item child in DataManager.Instance.allItem.items)
@@ -280,6 +300,8 @@ public class PnlMain : MonoBehaviour
                     DataManager.Instance.ModifyItemData(int.Parse(idText.text), itemText.text, false,
                         DateTime.Now.ToString(), DateTime.Now.ToString());
                 }
+                int notfinishedCount = DataManager.Instance.CountNotFinished();
+                textNotFinished.text = $"待完成 {notfinishedCount} 件事";
             });
 
             toggleButton.isOn = child.isFinished;
@@ -289,6 +311,12 @@ public class PnlMain : MonoBehaviour
             deleteButton.onClick.AddListener(delegate
             {
                 DataManager.Instance.DeleteItemData(int.Parse(idText.text), itemText.text, false);
+
+                int historyCount = DataManager.Instance.allItem.items.Count;
+                textHistory.text = $"历史 {historyCount} 件事";
+
+                int notfinishedCount = DataManager.Instance.CountNotFinished();
+                textNotFinished.text = $"待完成 {notfinishedCount} 件事";
 
                 if (now.Contains(str))
                 {
