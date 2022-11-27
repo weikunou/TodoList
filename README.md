@@ -2,6 +2,8 @@
 
 A todo list app made with Unity3D.
 
+<img src="Assets\RawAssets\icon.png" alt="icon" style="zoom:25%;" />
+
 There are some screen captures.
 
 | home_page                                                    | add_item                                                    | self_page                                                    |
