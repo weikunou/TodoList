@@ -5,13 +5,14 @@ using UnityEngine.UI;
 
 public class PnlSelf : MonoBehaviour
 {
-    Button btnModifyInfo, btnSettings;
+    Button btnModifyInfo, btnSettings, btnAbout;
     Text textName, textIntro;
 
     private void Awake()
     {
         btnModifyInfo = transform.Find("BtnModifyInfo").GetComponent<Button>();
         btnSettings = transform.Find("BtnSettings").GetComponent<Button>();
+        btnAbout = transform.Find("BtnAbout").GetComponent<Button>();
         textName = transform.Find("Info/TextName").GetComponent<Text>();
         textIntro = transform.Find("Info/TextIntro").GetComponent<Text>();
     }
@@ -20,6 +21,7 @@ public class PnlSelf : MonoBehaviour
     {
         btnModifyInfo.onClick.AddListener(()=>{ OpenModifyInfo(); });
         btnSettings.onClick.AddListener(()=>{ OpenSettings(); });
+        btnAbout.onClick.AddListener(()=>{ OpenAbout(); });
 
         textName.text = PlayerPrefs.GetString("Name", "用户101");
         textIntro.text = PlayerPrefs.GetString("Intro", "这个人什么都没写");
@@ -47,7 +49,7 @@ public class PnlSelf : MonoBehaviour
 
     private void OnModifyColorThemeEvent(string colorTheme)
     {
-        Button[] buttons = new Button[]{ btnModifyInfo, btnSettings };
+        Button[] buttons = new Button[]{ btnModifyInfo, btnSettings, btnAbout };
         ThemeManager.Instance.ChangeButtonStyle(buttons);
     }
 
@@ -59,5 +61,10 @@ public class PnlSelf : MonoBehaviour
     private void OpenSettings()
     {
         UIManager.Instance.CreatePanel(EnumType.UIPanel.PnlSettings, UIManager.Instance.TopCanvas);
+    }
+
+    private void OpenAbout()
+    {
+        UIManager.Instance.CreatePanel(EnumType.UIPanel.PnlAbout, UIManager.Instance.TopCanvas);
     }
 }
