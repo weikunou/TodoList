@@ -41,7 +41,15 @@ public class ResManager : Singleton<ResManager>
     public T LoadRes<T>(string abName, string resName) where T : Object
     {
         #if UNITY_EDITOR
-        return UnityEditor.AssetDatabase.LoadAssetAtPath<T>("Assets/GameRes/Prefabs/UI/" + resName + ".prefab");
+        if(abName.Equals("ui"))
+        {
+            return UnityEditor.AssetDatabase.LoadAssetAtPath<T>("Assets/GameRes/Prefabs/UI/" + resName + ".prefab");
+        }
+        else if(abName.Equals("texture"))
+        {
+            return UnityEditor.AssetDatabase.LoadAssetAtPath<T>("Assets/GameRes/Atlas/" + resName + ".spriteatlas");
+        }
+        return null;
         #else
         LoadAB(abName);
         // 加载资源

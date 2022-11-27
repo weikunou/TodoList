@@ -1,40 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.U2D;
 using System;
-
-/// <summary>
-/// 颜色主题
-/// </summary>
-public enum ColorTheme
-{
-    /// <summary>
-    /// 白色主题
-    /// </summary>
-    White,
-
-    /// <summary>
-    /// 黑色主题
-    /// </summary>
-    Dark,
-
-    /// <summary>
-    /// 蓝色主题
-    /// </summary>
-    Blue,
-
-    /// <summary>
-    /// 粉色主题
-    /// </summary>
-    Pink
-}
 
 /// <summary>
 /// 主题管理器类
 /// </summary>
 public class ThemeManager : Singleton<ThemeManager>
 {
+    EnumType.ColorTheme currentTheme;
+    SpriteAtlas atlas;
+    Sprite currentPopupStyle, currentButtonStyle, currentInputStyle;
+
     #region 白色主题配色
 
     /// <summary>
@@ -237,37 +214,48 @@ public class ThemeManager : Singleton<ThemeManager>
 
     void Start()
     {
+        atlas = ResManager.Instance.LoadRes<SpriteAtlas>("texture", "UI");
+        
+        string currentColorTheme = PlayerPrefs.GetString("ColorTheme", "White");
+        currentTheme = (EnumType.ColorTheme)Enum.Parse(typeof(EnumType.ColorTheme), currentColorTheme);
         // 默认上次的主题
-        ChooseColorTheme((ColorTheme)Enum.Parse(typeof(ColorTheme), PlayerPrefs.GetString("ColorTheme", "Dark")));
+        ChooseColorTheme(currentTheme);
+        EventHandler.CallModifyColorThemeEvent(currentColorTheme);
     }
 
     /// <summary>
     /// 选择主题
     /// </summary>
     /// <param name="colorTheme">颜色主题</param>
-    public void ChooseColorTheme(ColorTheme colorTheme)
+    public void ChooseColorTheme(EnumType.ColorTheme colorTheme)
     {
         switch(colorTheme)
         {
-            case ColorTheme.White:
+            case EnumType.ColorTheme.White:
+                currentButtonStyle = atlas.GetSprite("button_common");
+                currentPopupStyle = atlas.GetSprite("popup_common");
+                currentInputStyle = currentButtonStyle;
                 ChangeColorTheme(whiteText, whiteImage,
                     whiteButtonNormal, whiteButtonHighlighted, whiteButtonPress, whiteButtonSelected,
                     whiteItemPrefab, whiteItemColor, whiteItemFinishedColor);
                 break;
-            case ColorTheme.Dark:
-                ChangeColorTheme(darkText, darkImage,
-                    darkButtonNormal, darkButtonHighlighted, darkButtonPress, darkButtonSelected,
-                    darkItemPrefab, darkItemColor, darkItemFinishedColor);
+            case EnumType.ColorTheme.Pink:
+                currentButtonStyle = atlas.GetSprite("button_pink");
+                currentPopupStyle = atlas.GetSprite("popup_pink");
+                currentInputStyle = currentButtonStyle;
+                ChangeColorTheme(pinkText, pinkImage,
+                    pinkButtonNormal, pinkButtonHighlighted, pinkButtonPress, pinkButtonSelected,
+                    pinkItemPrefab, pinkItemColor, pinkItemFinishedColor);
                 break;
-            case ColorTheme.Blue:
+            case EnumType.ColorTheme.Blue:
                 ChangeColorTheme(blueText, blueImage,
                     blueButtonNormal, blueButtonHighlighted, blueButtonPress, blueButtonSelected,
                     blueItemPrefab, blueItemColor, blueItemFinishedColor);
                 break;
-            case ColorTheme.Pink:
-                ChangeColorTheme(pinkText, pinkImage,
-                    pinkButtonNormal, pinkButtonHighlighted, pinkButtonPress, pinkButtonSelected,
-                    pinkItemPrefab, pinkItemColor, pinkItemFinishedColor);
+            case EnumType.ColorTheme.Dark:
+                ChangeColorTheme(darkText, darkImage,
+                    darkButtonNormal, darkButtonHighlighted, darkButtonPress, darkButtonSelected,
+                    darkItemPrefab, darkItemColor, darkItemFinishedColor);
                 break;
             default:
                 ChangeColorTheme(whiteText, whiteImage,
@@ -277,28 +265,53 @@ public class ThemeManager : Singleton<ThemeManager>
         }
     }
 
-    /// <summary>
-    /// 改变颜色主题
-    /// </summary>
-    /// <param name="textColor">文本颜色</param>
-    /// <param name="imageColor">图片颜色</param>
-    /// <param name="buttonNormalColor">按钮正常颜色</param>
-    /// <param name="buttonHighlightedColor">按钮高亮颜色</param>
-    /// <param name="buttonPressColor">按钮按下颜色</param>
-    /// <param name="buttonSelectedColor">按钮选中颜色</param>
-    /// <param name="itemPrefab">事项预制体</param>
-    /// <param name="itemColor">事项颜色</param>
-    /// <param name="itemFinishedColor">事项完成颜色</param>
     public void ChangeColorTheme(Color textColor, Color imageColor,
         Color buttonNormalColor, Color buttonHighlightedColor, Color buttonPressColor, Color buttonSelectedColor,
         GameObject itemPrefab, Color itemColor, Color itemFinishedColor)
     {
-        ColorBlock cb = new ColorBlock();
-        cb.normalColor = buttonNormalColor;
-        cb.highlightedColor = buttonHighlightedColor;
-        cb.pressedColor = buttonPressColor;
-        cb.selectedColor = buttonSelectedColor;
-        cb.colorMultiplier = 1;
-        cb.fadeDuration = 0.1f;
+
+    }
+
+    public void ChangePopupStyle(Image[] images)
+    {
+        for(int i = 0; i < images.Length; i++)
+        {
+            images[i].sprite = currentPopupStyle;
+        }
+    }
+
+    public void ChangeImageStyle(Image[] images)
+    {
+        for(int i = 0; i < images.Length; i++)
+        {
+            images[i].sprite = currentButtonStyle;
+        }
+    }
+
+    public void ChangeButtonStyle(Button[] buttons)
+    {
+        for(int i = 0; i < buttons.Length; i++)
+        {
+            Image img = buttons[i].GetComponent<Image>();
+            img.sprite = currentButtonStyle;
+        }
+    }
+
+    public void ChangeToggleStyle(Toggle[] toggles)
+    {
+        for(int i = 0; i < toggles.Length; i++)
+        {
+            Image img = toggles[i].image;
+            img.sprite = currentButtonStyle;
+        }
+    }
+
+    public void ChangeInputStyle(InputField[] inputs)
+    {
+        for(int i = 0; i < inputs.Length; i++)
+        {
+            Image img = inputs[i].GetComponent<Image>();
+            img.sprite = currentInputStyle;
+        }
     }
 }

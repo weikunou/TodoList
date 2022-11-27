@@ -15,4 +15,11 @@ public static class EventHandler
     {
         ModifyInfoEvent?.Invoke(text_name, text_intro);
     }
+
+    public static event Action<string> ModifyColorThemeEvent;
+
+    public static void CallModifyColorThemeEvent(string colorTheme)
+    {
+        ModifyColorThemeEvent?.Invoke(colorTheme);
+    }
 }

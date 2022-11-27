@@ -23,22 +23,32 @@ public class PnlSelf : MonoBehaviour
 
         textName.text = PlayerPrefs.GetString("Name", "用户101");
         textIntro.text = PlayerPrefs.GetString("Intro", "这个人什么都没写");
+
+        OnModifyColorThemeEvent("");
     }
 
     private void OnEnable()
     {
         EventHandler.ModifyInfoEvent += OnModifyInfoEvent;
+        EventHandler.ModifyColorThemeEvent += OnModifyColorThemeEvent;
     }
 
     private void OnDisable()
     {
         EventHandler.ModifyInfoEvent -= OnModifyInfoEvent;
+        EventHandler.ModifyColorThemeEvent -= OnModifyColorThemeEvent;
     }
 
     private void OnModifyInfoEvent(string text_name, string text_intro)
     {
         textName.text = text_name;
         textIntro.text = text_intro;
+    }
+
+    private void OnModifyColorThemeEvent(string colorTheme)
+    {
+        Button[] buttons = new Button[]{ btnModifyInfo, btnSettings };
+        ThemeManager.Instance.ChangeButtonStyle(buttons);
     }
 
     private void OpenModifyInfo()

@@ -47,16 +47,19 @@ public class PnlMain : MonoBehaviour
         itemPrefab = ResManager.Instance.LoadRes<GameObject>("ui", "Item");
         id = PlayerPrefs.GetInt("ID", 0);
         ReadDataFromAllItem();
+        OnModifyColorThemeEvent("");
     }
 
     private void OnEnable()
     {
         EventHandler.AddNewItemEvent += OnAddNewItemEvent;
+        EventHandler.ModifyColorThemeEvent += OnModifyColorThemeEvent;
     }
 
     private void OnDisable()
     {
         EventHandler.AddNewItemEvent -= OnAddNewItemEvent;
+        EventHandler.ModifyColorThemeEvent -= OnModifyColorThemeEvent;
     }
 
     private void OpenNewItem()
@@ -161,6 +164,33 @@ public class PnlMain : MonoBehaviour
         // 添加数据
         DataManager.Instance.AddItemData(id, itemText.text, false,
             currentDate, currentDate, "");
+    }
+
+    private void OnModifyColorThemeEvent(string colorTheme)
+    {
+        Button[] buttons = new Button[]{ btnMain, btnAdd, btnSelf, btnFinished };
+        ThemeManager.Instance.ChangeButtonStyle(buttons);
+        List<Image> imageList = new List<Image>();
+        List<Toggle> toggleList = new List<Toggle>();
+        List<Button> buttonList = new List<Button>();
+        for(int i = 0; i < content.transform.childCount; i++)
+        {
+            Image img = content.transform.GetChild(i).GetComponent<Image>();
+            imageList.Add(img);
+            Toggle toggle = content.transform.GetChild(i).Find("Toggle")?.GetComponent<Toggle>();
+            if(toggle)
+            {
+                toggleList.Add(toggle);
+            }
+            Button button = content.transform.GetChild(i).Find("DeleteButton")?.GetComponent<Button>();
+            if(button)
+            {
+                buttonList.Add(button);
+            }
+        }
+        ThemeManager.Instance.ChangeImageStyle(imageList.ToArray());
+        ThemeManager.Instance.ChangeButtonStyle(buttonList.ToArray());
+        ThemeManager.Instance.ChangeToggleStyle(toggleList.ToArray());
     }
 
     /// <summary>
