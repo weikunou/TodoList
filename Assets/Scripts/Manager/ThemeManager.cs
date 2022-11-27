@@ -248,6 +248,9 @@ public class ThemeManager : Singleton<ThemeManager>
                     pinkItemPrefab, pinkItemColor, pinkItemFinishedColor);
                 break;
             case EnumType.ColorTheme.Blue:
+                currentButtonStyle = atlas.GetSprite("button_blue");
+                currentPopupStyle = atlas.GetSprite("popup_blue");
+                currentInputStyle = currentButtonStyle;
                 ChangeColorTheme(blueText, blueImage,
                     blueButtonNormal, blueButtonHighlighted, blueButtonPress, blueButtonSelected,
                     blueItemPrefab, blueItemColor, blueItemFinishedColor);

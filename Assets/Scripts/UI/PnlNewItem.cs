@@ -55,6 +55,7 @@ public class PnlNewItem : MonoBehaviour
 
         // 触发添加待办事项事件
         EventHandler.CallAddNewItemEvent(inputField.text);
+        EventHandler.CallModifyColorThemeEvent("");
 
         // 关闭弹窗
         ClosePanel();

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 200458678
+CRC: 3254693958
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 475e311fb8092211da71490927be342d
+    Hash: ed9321ae1f295117a5432060f0d53a84
   TypeTreeHash:
     serializedVersion: 2
     Hash: 0d677c6dec2405a43fe6dd294cca7c3e
@@ -19,9 +19,11 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/RawAssets/Sprites/head.jpg
 - Assets/RawAssets/Sprites/popup_common.png
+- Assets/RawAssets/Sprites/popup_blue.png
 - Assets/RawAssets/Sprites/popup_pink.png
 - Assets/RawAssets/Sprites/banner.jpg
 - Assets/RawAssets/Sprites/button_pink.png
 - Assets/RawAssets/Sprites/button_common.png
 - Assets/GameRes/Atlas/UI.spriteatlas
+- Assets/RawAssets/Sprites/button_blue.png
 Dependencies: []
