@@ -95,91 +95,14 @@ public class PnlMain : MonoBehaviour
 
     private void OnAddNewItemEvent(string text)
     {
-        string currentDate = DateTime.Now.ToString();
-
-        // 实例化事项，并添加到滚动视图中
-        GameObject item = Instantiate(itemPrefab, content);
-        item.name = "Item";
-        item.transform.SetAsFirstSibling();
         id++;
         PlayerPrefs.SetInt("ID", id);
+        string now = DateTime.Now.ToString();
 
-        // 修改事项文本
-        Text itemText = item.transform.Find("TextButton/Text").GetComponent<Text>();
-        itemText.text = text;
-
-        // 修改事项时间文本
-        Text itemDateText = item.transform.Find("TextButton/DateText").GetComponent<Text>();
-        itemDateText.text = currentDate;
-
-        // 修改事项 ID
-        Text idText = item.transform.Find("IDText").GetComponent<Text>();
-        idText.text = id.ToString();
-
-        // 修改事项文本按钮
-        Button textButton = item.transform.Find("TextButton").GetComponent<Button>();
-        textButton.onClick.AddListener(delegate
-        {
-            selectedItem = item;
-            UIManager.Instance.CreatePanel(EnumType.UIPanel.PnlModifyItem, UIManager.Instance.TopCanvas);
-            GameObject obj = UIManager.Instance.GetPanel(EnumType.UIPanel.PnlModifyItem);
-            obj.transform.GetComponent<PnlModifyItem>().UpdateInput(itemText.text);
-        });
-
-        // 修改开关
-        Toggle toggleButton = item.transform.Find("Toggle").GetComponent<Toggle>();
-        toggleButton.onValueChanged.AddListener(delegate
-        {
-            if (toggleButton.isOn)
-            {
-                FinishItem(item);
-
-                // 修改数据
-                DataManager.Instance.ModifyItemData(int.Parse(idText.text), itemText.text, true,
-                    DateTime.Now.ToString(), DateTime.Now.ToString());
-            }
-            else
-            {
-                RecoverItem(item);
-
-                // 修改数据
-                DataManager.Instance.ModifyItemData(int.Parse(idText.text), itemText.text, false,
-                    DateTime.Now.ToString(), DateTime.Now.ToString());
-            }
-            int notfinishedCount = DataManager.Instance.CountNotFinished();
-            textNotFinished.text = $"待完成 {notfinishedCount} 件事";
-        });
-
-        // 修改删除按钮
-        Button deleteButton = item.transform.Find("DeleteButton").GetComponent<Button>();
-        deleteButton.onClick.AddListener(delegate
-        {
-            DataManager.Instance.DeleteItemData(int.Parse(idText.text), itemText.text, false);
-
-            int historyCount = DataManager.Instance.allItem.items.Count;
-            textHistory.text = $"历史 {historyCount} 件事";
-
-            int notfinishedCount = DataManager.Instance.CountNotFinished();
-            textNotFinished.text = $"待完成 {notfinishedCount} 件事";
-            
-            string str = itemDateText.text.Substring(0, itemDateText.text.Length - 9);
-
-            if (currentDate.Contains(str))
-            {
-                count--;
-                textToday.text = $"今天 {count} 件事";
-            }
-
-            Destroy(item);
-        });
-
-        // 修改事项数量
-        count++;
-        textToday.text = $"今天 {count} 件事";
+        CreateItem(id, text, now, false);
 
         // 添加数据
-        DataManager.Instance.AddItemData(id, itemText.text, false,
-            currentDate, currentDate, "");
+        DataManager.Instance.AddItemData(id, text, false, now, now, "");
 
         int historyCount = DataManager.Instance.allItem.items.Count;
         textHistory.text = $"历史 {historyCount} 件事";
@@ -225,6 +148,93 @@ public class PnlMain : MonoBehaviour
         ThemeManager.Instance.ChangeToggleStyle(toggleList.ToArray());
     }
 
+    private void CreateItem(int id, string text, string date, bool isFinished)
+    {
+        // 实例化事项，并添加到滚动视图中
+        GameObject item = Instantiate(itemPrefab, content.transform);
+        item.name = "Item";
+        item.transform.SetAsFirstSibling();
+
+        // 修改事项 ID
+        Text idText = item.transform.Find("IDText").GetComponent<Text>();
+        idText.text = id.ToString();
+
+        // 修改事项文本
+        Text itemText = item.transform.Find("TextButton/Text").GetComponent<Text>();
+        itemText.text = text;
+
+        // 修改事项时间文本
+        Text itemDateText = item.transform.Find("TextButton/DateText").GetComponent<Text>();
+        itemDateText.text = date;
+
+        // 修改事项文本按钮
+        Button textButton = item.transform.Find("TextButton").GetComponent<Button>();
+        textButton.onClick.AddListener(delegate
+        {
+            selectedItem = item;
+            UIManager.Instance.CreatePanel(EnumType.UIPanel.PnlModifyItem, UIManager.Instance.TopCanvas);
+            GameObject obj = UIManager.Instance.GetPanel(EnumType.UIPanel.PnlModifyItem);
+            obj.transform.GetComponent<PnlModifyItem>().UpdateInput(itemText.text);
+        });
+
+        // 修改开关
+        Toggle toggleButton = item.transform.Find("Toggle").GetComponent<Toggle>();
+        toggleButton.onValueChanged.AddListener(delegate
+        {
+            if (toggleButton.isOn)
+            {
+                FinishItem(item);
+
+                // 修改数据
+                DataManager.Instance.ModifyItemData(int.Parse(idText.text), itemText.text, true,
+                    DateTime.Now.ToString(), DateTime.Now.ToString());
+            }
+            else
+            {
+                RecoverItem(item);
+
+                // 修改数据
+                DataManager.Instance.ModifyItemData(int.Parse(idText.text), itemText.text, false,
+                    DateTime.Now.ToString(), DateTime.Now.ToString());
+            }
+            int notfinishedCount = DataManager.Instance.CountNotFinished();
+            textNotFinished.text = $"待完成 {notfinishedCount} 件事";
+        });
+
+        toggleButton.isOn = isFinished;
+
+        string str = date.Substring(0, date.Length - 9);
+        string now = DateTime.Now.ToString();
+
+        // 修改删除按钮
+        Button deleteButton = item.transform.Find("DeleteButton").GetComponent<Button>();
+        deleteButton.onClick.AddListener(delegate
+        {
+            DataManager.Instance.DeleteItemData(int.Parse(idText.text), itemText.text, false);
+
+            int historyCount = DataManager.Instance.allItem.items.Count;
+            textHistory.text = $"历史 {historyCount} 件事";
+
+            int notfinishedCount = DataManager.Instance.CountNotFinished();
+            textNotFinished.text = $"待完成 {notfinishedCount} 件事";
+
+            if (now.Contains(str))
+            {
+                count--;
+                textToday.text = $"今天 {count} 件事";
+            }
+            
+            Destroy(item);
+        });
+
+        if (now.Contains(str))
+        {
+            // 修改事项数量
+            count++;
+            textToday.text = $"今天 {count} 件事";
+        }
+    }
+
     /// <summary>
     /// 完成事项
     /// </summary>
@@ -262,96 +272,14 @@ public class PnlMain : MonoBehaviour
     /// </summary>
     void ReadDataFromAllItem()
     {
+        foreach(Item child in DataManager.Instance.allItem.items)
+        {
+            CreateItem(child.itemID, child.itemContent, child.itemCreatedDate, child.isFinished);
+        }
+
         int historyCount = DataManager.Instance.allItem.items.Count;
         textHistory.text = $"历史 {historyCount} 件事";
         int notfinishedCount = DataManager.Instance.CountNotFinished();
         textNotFinished.text = $"待完成 {notfinishedCount} 件事";
-        string now = DateTime.Now.ToString();
-
-        foreach(Item child in DataManager.Instance.allItem.items)
-        {
-            string str = child.itemCreatedDate.Substring(0, child.itemCreatedDate.Length - 9);
-
-            // 实例化事项，并添加到滚动视图中
-            GameObject item = Instantiate(itemPrefab, content.transform);
-            item.name = "Item";
-            item.transform.SetAsFirstSibling();
-
-            // 修改事项文本
-            Text itemText = item.transform.Find("TextButton/Text").GetComponent<Text>();
-            itemText.text = child.itemContent;
-
-            // 修改事项时间文本
-            Text itemDateText = item.transform.Find("TextButton/DateText").GetComponent<Text>();
-            itemDateText.text = child.itemCreatedDate;
-
-            // 修改事项 ID
-            Text idText = item.transform.Find("IDText").GetComponent<Text>();
-            idText.text = child.itemID.ToString();
-
-            // 修改事项文本按钮
-            Button textButton = item.transform.Find("TextButton").GetComponent<Button>();
-            textButton.onClick.AddListener(delegate
-            {
-                selectedItem = item;
-                UIManager.Instance.CreatePanel(EnumType.UIPanel.PnlModifyItem, UIManager.Instance.TopCanvas);
-                GameObject obj = UIManager.Instance.GetPanel(EnumType.UIPanel.PnlModifyItem);
-                obj.transform.GetComponent<PnlModifyItem>().UpdateInput(itemText.text);
-            });
-
-            // 修改开关
-            Toggle toggleButton = item.transform.Find("Toggle").GetComponent<Toggle>();
-            toggleButton.onValueChanged.AddListener(delegate
-            {
-                if (toggleButton.isOn)
-                {
-                    FinishItem(item);
-
-                    // 修改数据
-                    DataManager.Instance.ModifyItemData(int.Parse(idText.text), itemText.text, true,
-                        DateTime.Now.ToString(), DateTime.Now.ToString());
-                }
-                else
-                {
-                    RecoverItem(item);
-
-                    // 修改数据
-                    DataManager.Instance.ModifyItemData(int.Parse(idText.text), itemText.text, false,
-                        DateTime.Now.ToString(), DateTime.Now.ToString());
-                }
-                int notfinishedCount = DataManager.Instance.CountNotFinished();
-                textNotFinished.text = $"待完成 {notfinishedCount} 件事";
-            });
-
-            toggleButton.isOn = child.isFinished;
-
-            // 修改删除按钮
-            Button deleteButton = item.transform.Find("DeleteButton").GetComponent<Button>();
-            deleteButton.onClick.AddListener(delegate
-            {
-                DataManager.Instance.DeleteItemData(int.Parse(idText.text), itemText.text, false);
-
-                int historyCount = DataManager.Instance.allItem.items.Count;
-                textHistory.text = $"历史 {historyCount} 件事";
-
-                int notfinishedCount = DataManager.Instance.CountNotFinished();
-                textNotFinished.text = $"待完成 {notfinishedCount} 件事";
-
-                if (now.Contains(str))
-                {
-                    count--;
-                    textToday.text = $"今天 {count} 件事";
-                }
-                
-                Destroy(item);
-            });
-
-            if (now.Contains(str))
-            {
-                // 修改事项数量
-                count++;
-                textToday.text = $"今天 {count} 件事";
-            }
-        }
     }
 }
