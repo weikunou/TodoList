@@ -8,6 +8,7 @@ public class PnlMain : MonoBehaviour
 {
     Text textHistory, textToday, textNotFinished;
     Button btnAdd, btnSettings, btnFinished, btnMain, btnSelf;
+    Image imgMain, imgSelf, bottomSection;
 
     Transform content;
     GameObject itemPrefab;
@@ -36,6 +37,9 @@ public class PnlMain : MonoBehaviour
         btnMain = transform.Find("BottomSection/BtnMain").GetComponent<Button>();
         btnAdd = transform.Find("BtnAdd").GetComponent<Button>();
         btnSelf = transform.Find("BottomSection/BtnSelf").GetComponent<Button>();
+        imgMain = transform.Find("BottomSection/BtnMain/Image").GetComponent<Image>();
+        imgSelf = transform.Find("BottomSection/BtnSelf/Image").GetComponent<Image>();
+        bottomSection = transform.Find("BottomSection").GetComponent<Image>();
         content = transform.Find("MiddleSection/Scroll View/Viewport/Content");
     }
 
@@ -75,12 +79,17 @@ public class PnlMain : MonoBehaviour
     private void ChangePanel(EnumType.UIPanel panel)
     {
         GameObject selfPanel = UIManager.Instance.GetPanel(EnumType.UIPanel.PnlSelf);
+        
         switch(panel)
         {
             case EnumType.UIPanel.PnlMain:
+                UIManager.Instance.SetImage(imgMain, "icon_home_active");
+                UIManager.Instance.SetImage(imgSelf, "icon_self_inactive");
                 selfPanel?.SetActive(false);
                 break;
             case EnumType.UIPanel.PnlSelf:
+                UIManager.Instance.SetImage(imgMain, "icon_home_inactive");
+                UIManager.Instance.SetImage(imgSelf, "icon_self_active");
                 if(selfPanel == null)
                 {
                     UIManager.Instance.CreatePanel(EnumType.UIPanel.PnlSelf, UIManager.Instance.MainCanvas);
@@ -123,7 +132,7 @@ public class PnlMain : MonoBehaviour
 
     private void OnModifyColorThemeEvent(string colorTheme)
     {
-        Button[] buttons = new Button[]{ btnMain, btnSelf, btnFinished };
+        Button[] buttons = new Button[]{ btnFinished };
         ThemeManager.Instance.ChangeButtonStyle(buttons);
         ThemeManager.Instance.ChangeBtnAddStyle(btnAdd);
         List<Image> imageList = new List<Image>();
@@ -144,6 +153,7 @@ public class PnlMain : MonoBehaviour
                 buttonList.Add(button);
             }
         }
+        imageList.Add(bottomSection);
         ThemeManager.Instance.ChangeImageStyle(imageList.ToArray());
         ThemeManager.Instance.ChangeButtonStyle(buttonList.ToArray());
         ThemeManager.Instance.ChangeToggleStyle(toggleList.ToArray());

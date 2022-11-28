@@ -53,24 +53,32 @@ SpriteAtlas:
   m_PackedSprites:
   - {fileID: 21300000, guid: 1b78c6409fc677f4da5475b4ce82def6, type: 3}
   - {fileID: 21300000, guid: 20ce2a91431ee764ea59e377053b664c, type: 3}
+  - {fileID: 21300000, guid: fa6995c27fa157e489cea529d60a8851, type: 3}
+  - {fileID: 21300000, guid: 38a236c22f30a424e91ea807a4738364, type: 3}
   - {fileID: 21300000, guid: a703fe536c4a6514193134c37ee5a28c, type: 3}
   - {fileID: 21300000, guid: d90193e30e2a23a409544d2e62afc097, type: 3}
+  - {fileID: 21300000, guid: 2e19c3e3460549a48a35448a0e75cd43, type: 3}
   - {fileID: 21300000, guid: 843290594f6fedd41aecab97ff3d0ab2, type: 3}
   - {fileID: 21300000, guid: c28e1399d76d13a4e8f5dda0e802e3ae, type: 3}
   - {fileID: 21300000, guid: 18fcabbab773dd14b84451620329430e, type: 3}
   - {fileID: 21300000, guid: f92f027b4f4bc6a44a92228e782532f9, type: 3}
+  - {fileID: 21300000, guid: 4bb7033c6c35c7c4a9fa4e5ea878b283, type: 3}
   - {fileID: 21300000, guid: 34dd287c8fe31b840b9e2e74ed5ca33b, type: 3}
   - {fileID: 21300000, guid: bcbb6bdd4f765f743a79ff560e0fc454, type: 3}
   - {fileID: 21300000, guid: f07a1dee3a71ba941b535b5295204fc6, type: 3}
   m_PackedSpriteNamesToIndex:
   - button_pink
   - popup_blue
+  - icon_home_inactive
+  - icon_home_active
   - banner
   - popup_common
+  - icon_self_active
   - button_blue
   - head
   - button_add_pink
   - button_add_blue
+  - icon_self_inactive
   - button_add_common
   - popup_pink
   - button_common

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.U2D;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -13,12 +15,16 @@ public class UIManager : Singleton<UIManager>
     public Transform MainCanvas { get { return mainCanvas; } }
     public Transform TopCanvas { get { return topCanvas; } }
 
+    private SpriteAtlas atlas;
+
     private void Start()
     {
         mainCanvas = transform.Find("MainCanvas");
         topCanvas = transform.Find("TopCanvas");
 
         CreatePanel(EnumType.UIPanel.PnlMain, mainCanvas);
+
+        atlas = ResManager.Instance.LoadRes<SpriteAtlas>("texture", "UI");
     }
 
     public void CreatePanel(EnumType.UIPanel uiPanel, Transform parent)
@@ -57,5 +63,15 @@ public class UIManager : Singleton<UIManager>
             Destroy(value);
         }
         ui_objects.Clear();
+    }
+
+    public Sprite GetSpriteFromUIAtlas(string name)
+    {
+        return atlas.GetSprite(name);
+    }
+
+    public void SetImage(Image image, string icon)
+    {
+        image.sprite = GetSpriteFromUIAtlas(icon);
     }
 }
