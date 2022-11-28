@@ -19,16 +19,6 @@ public class PnlMain : MonoBehaviour
     bool isItemShow = true;
     EnumType.UIPanel currentPanel = EnumType.UIPanel.PnlMain;
 
-    /// <summary>
-    /// 事项未完成的颜色
-    /// </summary>
-    public Color itemColor;
-
-    /// <summary>
-    /// 事项完成后的颜色
-    /// </summary>
-    public Color itemFinishedColor;
-
     private void Awake()
     {
         textHistory = transform.Find("TopSection/TextGroup/TextHistory").GetComponent<Text>();
@@ -256,7 +246,7 @@ public class PnlMain : MonoBehaviour
     {
         item.transform.SetSiblingIndex(btnFinished.transform.GetSiblingIndex());
         item.SetActive(isItemShow);
-        item.GetComponent<Image>().color = itemFinishedColor;
+        item.GetComponent<CanvasGroup>().alpha = 0.5f;
     }
 
     /// <summary>
@@ -265,7 +255,7 @@ public class PnlMain : MonoBehaviour
     void RecoverItem(GameObject item)
     {
         item.transform.SetSiblingIndex(btnFinished.transform.GetSiblingIndex());
-        item.GetComponent<Image>().color = itemColor;
+        item.GetComponent<CanvasGroup>().alpha = 1;
     }
 
     /// <summary>
