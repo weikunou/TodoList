@@ -34,7 +34,7 @@ public class PnlMain : MonoBehaviour
         textNotFinished = transform.Find("TopSection/TextGroup/TextNotFinished").GetComponent<Text>();
         btnFinished = transform.Find("MiddleSection/Scroll View/Viewport/Content/BtnFinished").GetComponent<Button>();
         btnMain = transform.Find("BottomSection/BtnMain").GetComponent<Button>();
-        btnAdd = transform.Find("BottomSection/BtnAdd").GetComponent<Button>();
+        btnAdd = transform.Find("BtnAdd").GetComponent<Button>();
         btnSelf = transform.Find("BottomSection/BtnSelf").GetComponent<Button>();
         content = transform.Find("MiddleSection/Scroll View/Viewport/Content");
     }
@@ -123,8 +123,9 @@ public class PnlMain : MonoBehaviour
 
     private void OnModifyColorThemeEvent(string colorTheme)
     {
-        Button[] buttons = new Button[]{ btnMain, btnAdd, btnSelf, btnFinished };
+        Button[] buttons = new Button[]{ btnMain, btnSelf, btnFinished };
         ThemeManager.Instance.ChangeButtonStyle(buttons);
+        ThemeManager.Instance.ChangeBtnAddStyle(btnAdd);
         List<Image> imageList = new List<Image>();
         List<Toggle> toggleList = new List<Toggle>();
         List<Button> buttonList = new List<Button>();

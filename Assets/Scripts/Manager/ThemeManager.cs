@@ -10,7 +10,7 @@ public class ThemeManager : Singleton<ThemeManager>
 {
     EnumType.ColorTheme currentTheme;
     SpriteAtlas atlas;
-    Sprite currentPopupStyle, currentButtonStyle, currentInputStyle;
+    Sprite currentPopupStyle, currentButtonStyle, currentBtnAddStyle, currentInputStyle;
 
     #region 白色主题配色
 
@@ -233,6 +233,7 @@ public class ThemeManager : Singleton<ThemeManager>
         {
             case EnumType.ColorTheme.White:
                 currentButtonStyle = atlas.GetSprite("button_common");
+                currentBtnAddStyle = atlas.GetSprite("button_add_common");
                 currentPopupStyle = atlas.GetSprite("popup_common");
                 currentInputStyle = currentButtonStyle;
                 ChangeColorTheme(whiteText, whiteImage,
@@ -241,6 +242,7 @@ public class ThemeManager : Singleton<ThemeManager>
                 break;
             case EnumType.ColorTheme.Pink:
                 currentButtonStyle = atlas.GetSprite("button_pink");
+                currentBtnAddStyle = atlas.GetSprite("button_add_pink");
                 currentPopupStyle = atlas.GetSprite("popup_pink");
                 currentInputStyle = currentButtonStyle;
                 ChangeColorTheme(pinkText, pinkImage,
@@ -249,6 +251,7 @@ public class ThemeManager : Singleton<ThemeManager>
                 break;
             case EnumType.ColorTheme.Blue:
                 currentButtonStyle = atlas.GetSprite("button_blue");
+                currentBtnAddStyle = atlas.GetSprite("button_add_blue");
                 currentPopupStyle = atlas.GetSprite("popup_blue");
                 currentInputStyle = currentButtonStyle;
                 ChangeColorTheme(blueText, blueImage,
@@ -298,6 +301,12 @@ public class ThemeManager : Singleton<ThemeManager>
             Image img = buttons[i].GetComponent<Image>();
             img.sprite = currentButtonStyle;
         }
+    }
+
+    public void ChangeBtnAddStyle(Button button)
+    {
+        Image img = button.GetComponent<Image>();
+        img.sprite = currentBtnAddStyle;
     }
 
     public void ChangeToggleStyle(Toggle[] toggles)
