@@ -51,37 +51,53 @@ SpriteAtlas:
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: a8cf83309900c554c92d968652e97b36, type: 3}
   - {fileID: 21300000, guid: 1b78c6409fc677f4da5475b4ce82def6, type: 3}
+  - {fileID: 21300000, guid: c9b12350e4e26b94ea5702f937599d25, type: 3}
   - {fileID: 21300000, guid: 20ce2a91431ee764ea59e377053b664c, type: 3}
   - {fileID: 21300000, guid: fa6995c27fa157e489cea529d60a8851, type: 3}
   - {fileID: 21300000, guid: 38a236c22f30a424e91ea807a4738364, type: 3}
+  - {fileID: 21300000, guid: 212687e2b1fff5f429e1abeb345c2823, type: 3}
   - {fileID: 21300000, guid: a703fe536c4a6514193134c37ee5a28c, type: 3}
+  - {fileID: 21300000, guid: cb7550a3e9e9e0b4a9e61fc48543ef91, type: 3}
   - {fileID: 21300000, guid: d90193e30e2a23a409544d2e62afc097, type: 3}
   - {fileID: 21300000, guid: 2e19c3e3460549a48a35448a0e75cd43, type: 3}
+  - {fileID: 21300000, guid: 9f1e9158d9ef67e488d3bb633140dfad, type: 3}
   - {fileID: 21300000, guid: 843290594f6fedd41aecab97ff3d0ab2, type: 3}
   - {fileID: 21300000, guid: c28e1399d76d13a4e8f5dda0e802e3ae, type: 3}
   - {fileID: 21300000, guid: 18fcabbab773dd14b84451620329430e, type: 3}
   - {fileID: 21300000, guid: f92f027b4f4bc6a44a92228e782532f9, type: 3}
   - {fileID: 21300000, guid: 4bb7033c6c35c7c4a9fa4e5ea878b283, type: 3}
   - {fileID: 21300000, guid: 34dd287c8fe31b840b9e2e74ed5ca33b, type: 3}
+  - {fileID: 21300000, guid: f9b27f9cc0308c348bec1a386c4a3ee2, type: 3}
   - {fileID: 21300000, guid: bcbb6bdd4f765f743a79ff560e0fc454, type: 3}
+  - {fileID: 21300000, guid: 1411cb5e2dddb9c41a31ee89c75bc5af, type: 3}
   - {fileID: 21300000, guid: f07a1dee3a71ba941b535b5295204fc6, type: 3}
+  - {fileID: 21300000, guid: d57ac8bf7e3daa54290567780e0fc76f, type: 3}
   m_PackedSpriteNamesToIndex:
+  - icon_home_active_pink
   - button_pink
+  - icon_self_inactive_pink
   - popup_blue
-  - icon_home_inactive
-  - icon_home_active
+  - icon_home_inactive_common
+  - icon_home_active_common
+  - icon_home_active_blue
   - banner
+  - icon_home_inactive_blue
   - popup_common
-  - icon_self_active
+  - icon_self_active_common
+  - icon_self_active_pink
   - button_blue
   - head
   - button_add_pink
   - button_add_blue
-  - icon_self_inactive
+  - icon_self_inactive_common
   - button_add_common
+  - icon_self_active_blue
   - popup_pink
+  - icon_home_inactive_pink
   - button_common
+  - icon_self_inactive_blue
   m_RenderDataMap: {}
   m_Tag: UI
   m_IsVariant: 0

@@ -11,6 +11,7 @@ public class ThemeManager : Singleton<ThemeManager>
     EnumType.ColorTheme currentTheme;
     SpriteAtlas atlas;
     Sprite currentPopupStyle, currentButtonStyle, currentBtnAddStyle, currentInputStyle;
+    string currentIconStyle;
 
     #region 白色主题配色
 
@@ -236,6 +237,7 @@ public class ThemeManager : Singleton<ThemeManager>
                 currentBtnAddStyle = atlas.GetSprite("button_add_common");
                 currentPopupStyle = atlas.GetSprite("popup_common");
                 currentInputStyle = currentButtonStyle;
+                currentIconStyle = "_common";
                 ChangeColorTheme(whiteText, whiteImage,
                     whiteButtonNormal, whiteButtonHighlighted, whiteButtonPress, whiteButtonSelected,
                     whiteItemPrefab, whiteItemColor, whiteItemFinishedColor);
@@ -245,6 +247,7 @@ public class ThemeManager : Singleton<ThemeManager>
                 currentBtnAddStyle = atlas.GetSprite("button_add_pink");
                 currentPopupStyle = atlas.GetSprite("popup_pink");
                 currentInputStyle = currentButtonStyle;
+                currentIconStyle = "_pink";
                 ChangeColorTheme(pinkText, pinkImage,
                     pinkButtonNormal, pinkButtonHighlighted, pinkButtonPress, pinkButtonSelected,
                     pinkItemPrefab, pinkItemColor, pinkItemFinishedColor);
@@ -254,6 +257,7 @@ public class ThemeManager : Singleton<ThemeManager>
                 currentBtnAddStyle = atlas.GetSprite("button_add_blue");
                 currentPopupStyle = atlas.GetSprite("popup_blue");
                 currentInputStyle = currentButtonStyle;
+                currentIconStyle = "_blue";
                 ChangeColorTheme(blueText, blueImage,
                     blueButtonNormal, blueButtonHighlighted, blueButtonPress, blueButtonSelected,
                     blueItemPrefab, blueItemColor, blueItemFinishedColor);
@@ -325,5 +329,10 @@ public class ThemeManager : Singleton<ThemeManager>
             Image img = inputs[i].GetComponent<Image>();
             img.sprite = currentInputStyle;
         }
+    }
+
+    public string GetIconColor()
+    {
+        return currentIconStyle;
     }
 }

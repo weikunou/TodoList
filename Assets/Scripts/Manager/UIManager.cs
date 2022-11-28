@@ -74,4 +74,10 @@ public class UIManager : Singleton<UIManager>
     {
         image.sprite = GetSpriteFromUIAtlas(icon);
     }
+
+    public void SetImageWithColor(Image image, string icon)
+    {
+        string color = ThemeManager.Instance.GetIconColor();
+        image.sprite = GetSpriteFromUIAtlas(icon + color);
+    }
 }

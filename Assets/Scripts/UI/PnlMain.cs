@@ -17,6 +17,7 @@ public class PnlMain : MonoBehaviour
     int id;
     int count;
     bool isItemShow = true;
+    EnumType.UIPanel currentPanel = EnumType.UIPanel.PnlMain;
 
     /// <summary>
     /// 事项未完成的颜色
@@ -78,18 +79,19 @@ public class PnlMain : MonoBehaviour
 
     private void ChangePanel(EnumType.UIPanel panel)
     {
+        currentPanel = panel;
         GameObject selfPanel = UIManager.Instance.GetPanel(EnumType.UIPanel.PnlSelf);
         
         switch(panel)
         {
             case EnumType.UIPanel.PnlMain:
-                UIManager.Instance.SetImage(imgMain, "icon_home_active");
-                UIManager.Instance.SetImage(imgSelf, "icon_self_inactive");
+                UIManager.Instance.SetImageWithColor(imgMain, "icon_home_active");
+                UIManager.Instance.SetImageWithColor(imgSelf, "icon_self_inactive");
                 selfPanel?.SetActive(false);
                 break;
             case EnumType.UIPanel.PnlSelf:
-                UIManager.Instance.SetImage(imgMain, "icon_home_inactive");
-                UIManager.Instance.SetImage(imgSelf, "icon_self_active");
+                UIManager.Instance.SetImageWithColor(imgMain, "icon_home_inactive");
+                UIManager.Instance.SetImageWithColor(imgSelf, "icon_self_active");
                 if(selfPanel == null)
                 {
                     UIManager.Instance.CreatePanel(EnumType.UIPanel.PnlSelf, UIManager.Instance.MainCanvas);
@@ -157,6 +159,7 @@ public class PnlMain : MonoBehaviour
         ThemeManager.Instance.ChangeImageStyle(imageList.ToArray());
         ThemeManager.Instance.ChangeButtonStyle(buttonList.ToArray());
         ThemeManager.Instance.ChangeToggleStyle(toggleList.ToArray());
+        ChangePanel(currentPanel);
     }
 
     private void CreateItem(int id, string text, string date, bool isFinished)
