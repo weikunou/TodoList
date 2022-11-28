@@ -8,8 +8,8 @@ public class EnumType
     /// </summary>
     public enum UIPanel
     {
-        // 主界面, 设置界面, 添加界面, 个人界面, 修改信息界面, 关于app界面
-        PnlMain, PnlSettings, PnlNewItem, PnlSelf, PnlModifyInfo, PnlAbout
+        // 主界面, 设置界面, 添加事项界面, 修改事项界面, 个人界面, 修改信息界面, 关于app界面
+        PnlMain, PnlSettings, PnlNewItem, PnlModifyItem, PnlSelf, PnlModifyInfo, PnlAbout
     }
 
     /// <summary>

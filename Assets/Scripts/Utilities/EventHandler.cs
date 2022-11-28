@@ -9,6 +9,13 @@ public static class EventHandler
         AddNewItemEvent?.Invoke(text);
     }
 
+    public static event Action<string> ModifyItemEvent;
+
+    public static void CallModifyItemEvent(string text)
+    {
+        ModifyItemEvent?.Invoke(text);
+    }
+
     public static event Action<string, string> ModifyInfoEvent;
 
     public static void CallModifyInfoEvent(string text_name, string text_intro)

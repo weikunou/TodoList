@@ -11,6 +11,7 @@ public class PnlMain : MonoBehaviour
 
     Transform content;
     GameObject itemPrefab;
+    GameObject selectedItem;
 
     int id;
     int count;
@@ -55,12 +56,14 @@ public class PnlMain : MonoBehaviour
     private void OnEnable()
     {
         EventHandler.AddNewItemEvent += OnAddNewItemEvent;
+        EventHandler.ModifyItemEvent += OnModifyItemEvent;
         EventHandler.ModifyColorThemeEvent += OnModifyColorThemeEvent;
     }
 
     private void OnDisable()
     {
         EventHandler.AddNewItemEvent -= OnAddNewItemEvent;
+        EventHandler.ModifyItemEvent -= OnModifyItemEvent;
         EventHandler.ModifyColorThemeEvent -= OnModifyColorThemeEvent;
     }
 
@@ -117,7 +120,10 @@ public class PnlMain : MonoBehaviour
         Button textButton = item.transform.Find("TextButton").GetComponent<Button>();
         textButton.onClick.AddListener(delegate
         {
-
+            selectedItem = item;
+            UIManager.Instance.CreatePanel(EnumType.UIPanel.PnlModifyItem, UIManager.Instance.TopCanvas);
+            GameObject obj = UIManager.Instance.GetPanel(EnumType.UIPanel.PnlModifyItem);
+            obj.transform.GetComponent<PnlModifyItem>().UpdateInput(itemText.text);
         });
 
         // 修改开关
@@ -180,6 +186,16 @@ public class PnlMain : MonoBehaviour
 
         int notfinishedCount = DataManager.Instance.CountNotFinished();
         textNotFinished.text = $"待完成 {notfinishedCount} 件事";
+    }
+
+    private void OnModifyItemEvent(string text)
+    {
+        Text itemText = selectedItem.transform.Find("TextButton/Text").GetComponent<Text>();
+        itemText.text = text;
+        Text idText = selectedItem.transform.Find("IDText").GetComponent<Text>();
+        Toggle toggleButton = selectedItem.transform.Find("Toggle").GetComponent<Toggle>();
+        DataManager.Instance.ModifyItemData(int.Parse(idText.text), text, toggleButton.isOn,
+            DateTime.Now.ToString(), DateTime.Now.ToString());
     }
 
     private void OnModifyColorThemeEvent(string colorTheme)
@@ -277,7 +293,10 @@ public class PnlMain : MonoBehaviour
             Button textButton = item.transform.Find("TextButton").GetComponent<Button>();
             textButton.onClick.AddListener(delegate
             {
-
+                selectedItem = item;
+                UIManager.Instance.CreatePanel(EnumType.UIPanel.PnlModifyItem, UIManager.Instance.TopCanvas);
+                GameObject obj = UIManager.Instance.GetPanel(EnumType.UIPanel.PnlModifyItem);
+                obj.transform.GetComponent<PnlModifyItem>().UpdateInput(itemText.text);
             });
 
             // 修改开关
