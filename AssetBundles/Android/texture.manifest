@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3261708661
+CRC: 4229769769
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: a079f47995cefbf34106967476b97a8e
+    Hash: fb4232e3f99af02b947d734198157e12
   TypeTreeHash:
     serializedVersion: 2
     Hash: 0d677c6dec2405a43fe6dd294cca7c3e
@@ -18,19 +18,27 @@ ClassTypes:
 SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/RawAssets/Sprites/head.jpg
-- Assets/RawAssets/Sprites/icon_home_active.png
+- Assets/RawAssets/Sprites/icon_home_active_common.png
 - Assets/RawAssets/Sprites/popup_blue.png
 - Assets/RawAssets/Sprites/popup_common.png
+- Assets/RawAssets/Sprites/icon_home_active_blue.png
 - Assets/RawAssets/Sprites/popup_pink.png
-- Assets/RawAssets/Sprites/icon_self_inactive.png
-- Assets/RawAssets/Sprites/icon_self_active.png
+- Assets/RawAssets/Sprites/icon_home_active_pink.png
+- Assets/RawAssets/Sprites/icon_self_inactive_common.png
+- Assets/RawAssets/Sprites/icon_self_active_pink.png
+- Assets/RawAssets/Sprites/icon_self_active_common.png
+- Assets/RawAssets/Sprites/icon_self_active_blue.png
 - Assets/RawAssets/Sprites/button_add_pink.png
-- Assets/RawAssets/Sprites/banner.jpg
+- Assets/RawAssets/Sprites/icon_self_inactive_pink.png
 - Assets/RawAssets/Sprites/button_pink.png
+- Assets/RawAssets/Sprites/banner.jpg
 - Assets/RawAssets/Sprites/button_common.png
+- Assets/RawAssets/Sprites/icon_home_inactive_pink.png
+- Assets/RawAssets/Sprites/icon_home_inactive_blue.png
 - Assets/GameRes/Atlas/UI.spriteatlas
 - Assets/RawAssets/Sprites/button_blue.png
 - Assets/RawAssets/Sprites/button_add_common.png
+- Assets/RawAssets/Sprites/icon_self_inactive_blue.png
 - Assets/RawAssets/Sprites/button_add_blue.png
-- Assets/RawAssets/Sprites/icon_home_inactive.png
+- Assets/RawAssets/Sprites/icon_home_inactive_common.png
 Dependencies: []
