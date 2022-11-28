@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3254693958
+CRC: 3261708661
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: ed9321ae1f295117a5432060f0d53a84
+    Hash: a079f47995cefbf34106967476b97a8e
   TypeTreeHash:
     serializedVersion: 2
     Hash: 0d677c6dec2405a43fe6dd294cca7c3e
@@ -18,12 +18,19 @@ ClassTypes:
 SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/RawAssets/Sprites/head.jpg
-- Assets/RawAssets/Sprites/popup_common.png
+- Assets/RawAssets/Sprites/icon_home_active.png
 - Assets/RawAssets/Sprites/popup_blue.png
+- Assets/RawAssets/Sprites/popup_common.png
 - Assets/RawAssets/Sprites/popup_pink.png
+- Assets/RawAssets/Sprites/icon_self_inactive.png
+- Assets/RawAssets/Sprites/icon_self_active.png
+- Assets/RawAssets/Sprites/button_add_pink.png
 - Assets/RawAssets/Sprites/banner.jpg
 - Assets/RawAssets/Sprites/button_pink.png
 - Assets/RawAssets/Sprites/button_common.png
 - Assets/GameRes/Atlas/UI.spriteatlas
 - Assets/RawAssets/Sprites/button_blue.png
+- Assets/RawAssets/Sprites/button_add_common.png
+- Assets/RawAssets/Sprites/button_add_blue.png
+- Assets/RawAssets/Sprites/icon_home_inactive.png
 Dependencies: []

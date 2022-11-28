@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 298121546
+CRC: 2290899264
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 95aa0403fe62f7123564fc6738331162
+    Hash: e53236a9c1272932be594619cb574252
   TypeTreeHash:
     serializedVersion: 2
-    Hash: b0fff46669666f1b5fd08ee455bf73b6
+    Hash: 394319a1c7d1ced3dc61e6e5ebfaf7d9
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -27,6 +27,8 @@ ClassTypes:
   Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 34ce9d460320056469c7b6df80e5193b, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 97904650ecc496d40aad3b0f64044224, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: cc34d860bcc76dc4b8a3772daa8b3b42, type: 3}
 - Class: 114
@@ -50,7 +52,9 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 436f75b1fd668dc409d3a5241e2582f8, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: 97904650ecc496d40aad3b0f64044224, type: 3}
+  Script: {fileID: 11500000, guid: 2acc246118bd94740bc929c9edc8077d, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f4ff91ba6c5970a4eb3a18348c23af67, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 128
@@ -93,6 +97,7 @@ SerializeReferenceClassIdentifiers:
 Assets:
 - Assets/GameRes/Prefabs/UI/Item.prefab
 - Assets/GameRes/Prefabs/UI/PnlModifyInfo.prefab
+- Assets/GameRes/Prefabs/UI/PnlModifyItem.prefab
 - Assets/GameRes/Prefabs/UI/PnlNewItem.prefab
 - Assets/GameRes/Prefabs/UI/PnlAbout.prefab
 - Assets/GameRes/Prefabs/UI/PnlSelf.prefab
