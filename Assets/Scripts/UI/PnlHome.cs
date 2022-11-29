@@ -235,11 +235,10 @@ public class PnlHome : MonoBehaviour
     void ShowOrHideFinishedItem()
     {
         isItemShow = !isItemShow;
-        float alpha = isItemShow ? 0.5f : 0;
 
         for(int i = btnFinished.transform.GetSiblingIndex() + 1; i < content.transform.childCount; i++)
         {
-            content.transform.GetChild(i).GetComponent<CanvasGroup>().alpha = alpha;
+            content.transform.GetChild(i).gameObject.SetActive(isItemShow);
         }
     }
 
