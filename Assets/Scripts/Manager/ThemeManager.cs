@@ -2,12 +2,20 @@
 using UnityEngine.UI;
 using UnityEngine.U2D;
 using System;
+using System.Collections.Generic;
 
 /// <summary>
 /// 主题管理器类
 /// </summary>
 public class ThemeManager : Singleton<ThemeManager>
 {
+    Dictionary<EnumType.ColorTheme, string> colorThemeDic = new Dictionary<EnumType.ColorTheme, string>
+    {
+        { EnumType.ColorTheme.Grey, "_grey" },
+        { EnumType.ColorTheme.Pink, "_pink" },
+        { EnumType.ColorTheme.Blue, "_blue" },
+        { EnumType.ColorTheme.Green, "_green" },
+    };
     EnumType.ColorTheme currentTheme;
     SpriteAtlas atlas;
     Sprite currentPopupStyle, currentButtonStyle, currentBtnAddStyle, currentInputStyle;
@@ -217,9 +225,9 @@ public class ThemeManager : Singleton<ThemeManager>
     {
         atlas = ResManager.Instance.LoadRes<SpriteAtlas>("texture", "UI");
         
-        string currentColorTheme = PlayerPrefs.GetString("ColorTheme", "White");
-        currentTheme = (EnumType.ColorTheme)Enum.Parse(typeof(EnumType.ColorTheme), currentColorTheme);
         // 默认上次的主题
+        string currentColorTheme = PlayerPrefs.GetString("ColorTheme", "Grey");
+        currentTheme = (EnumType.ColorTheme)Enum.Parse(typeof(EnumType.ColorTheme), currentColorTheme);
         ChooseColorTheme(currentTheme);
         EventHandler.CallModifyColorThemeEvent(currentColorTheme);
     }
@@ -230,56 +238,12 @@ public class ThemeManager : Singleton<ThemeManager>
     /// <param name="colorTheme">颜色主题</param>
     public void ChooseColorTheme(EnumType.ColorTheme colorTheme)
     {
-        switch(colorTheme)
-        {
-            case EnumType.ColorTheme.White:
-                currentButtonStyle = atlas.GetSprite("button_common");
-                currentBtnAddStyle = atlas.GetSprite("button_add_common");
-                currentPopupStyle = atlas.GetSprite("popup_common");
-                currentInputStyle = currentButtonStyle;
-                currentIconStyle = "_common";
-                ChangeColorTheme(whiteText, whiteImage,
-                    whiteButtonNormal, whiteButtonHighlighted, whiteButtonPress, whiteButtonSelected,
-                    whiteItemPrefab, whiteItemColor, whiteItemFinishedColor);
-                break;
-            case EnumType.ColorTheme.Pink:
-                currentButtonStyle = atlas.GetSprite("button_pink");
-                currentBtnAddStyle = atlas.GetSprite("button_add_pink");
-                currentPopupStyle = atlas.GetSprite("popup_pink");
-                currentInputStyle = currentButtonStyle;
-                currentIconStyle = "_pink";
-                ChangeColorTheme(pinkText, pinkImage,
-                    pinkButtonNormal, pinkButtonHighlighted, pinkButtonPress, pinkButtonSelected,
-                    pinkItemPrefab, pinkItemColor, pinkItemFinishedColor);
-                break;
-            case EnumType.ColorTheme.Blue:
-                currentButtonStyle = atlas.GetSprite("button_blue");
-                currentBtnAddStyle = atlas.GetSprite("button_add_blue");
-                currentPopupStyle = atlas.GetSprite("popup_blue");
-                currentInputStyle = currentButtonStyle;
-                currentIconStyle = "_blue";
-                ChangeColorTheme(blueText, blueImage,
-                    blueButtonNormal, blueButtonHighlighted, blueButtonPress, blueButtonSelected,
-                    blueItemPrefab, blueItemColor, blueItemFinishedColor);
-                break;
-            case EnumType.ColorTheme.Dark:
-                ChangeColorTheme(darkText, darkImage,
-                    darkButtonNormal, darkButtonHighlighted, darkButtonPress, darkButtonSelected,
-                    darkItemPrefab, darkItemColor, darkItemFinishedColor);
-                break;
-            default:
-                ChangeColorTheme(whiteText, whiteImage,
-                    whiteButtonNormal, whiteButtonHighlighted, whiteButtonPress, whiteButtonSelected,
-                    whiteItemPrefab, whiteItemColor, whiteItemFinishedColor);
-                break;
-        }
-    }
-
-    public void ChangeColorTheme(Color textColor, Color imageColor,
-        Color buttonNormalColor, Color buttonHighlightedColor, Color buttonPressColor, Color buttonSelectedColor,
-        GameObject itemPrefab, Color itemColor, Color itemFinishedColor)
-    {
-
+        string colorStr = colorThemeDic[colorTheme];
+        currentButtonStyle = atlas.GetSprite("button" + colorStr);
+        currentBtnAddStyle = atlas.GetSprite("button_add" + colorStr);
+        currentPopupStyle = atlas.GetSprite("popup" + colorStr);
+        currentInputStyle = currentButtonStyle;
+        currentIconStyle = colorStr;
     }
 
     public void ChangePopupStyle(Image[] images)

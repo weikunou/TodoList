@@ -17,7 +17,7 @@ public class EnumType
     /// </summary>
     public enum ColorTheme
     {
-        // 白色, 粉色, 蓝色, 黑色
-        White, Pink, Blue, Dark
+        // 素雅灰, 胭脂粉, 清新蓝, 抹茶绿
+        Grey, Pink, Blue, Green
     }
 }

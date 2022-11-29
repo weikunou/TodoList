@@ -46,7 +46,7 @@ public class PnlSettings : MonoBehaviour
             }
         }
 
-        colorGroup.transform.Find(PlayerPrefs.GetString("ColorTheme", "Dark") + "Toggle").GetComponent<Toggle>().isOn = true;
+        colorGroup.transform.Find(PlayerPrefs.GetString("ColorTheme", "Grey") + "Toggle").GetComponent<Toggle>().isOn = true;
         frameGroup.transform.Find(PlayerPrefs.GetString("Frame", "Default") + "Toggle").GetComponent<Toggle>().isOn = true;
     }
 
