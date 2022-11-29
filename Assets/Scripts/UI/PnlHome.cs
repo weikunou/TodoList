@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PnlHome : MonoBehaviour
 {
+    Image topSection;
     Text textHistory, textToday, textNotFinished;
     Button btnAdd, btnSettings, btnFinished;
     
@@ -21,6 +22,7 @@ public class PnlHome : MonoBehaviour
 
     private void Awake()
     {
+        topSection = transform.Find("TopSection").GetComponent<Image>();
         textHistory = transform.Find("TopSection/TextGroup/TextHistory").GetComponent<Text>();
         textToday = transform.Find("TopSection/TextGroup/TextToday").GetComponent<Text>();
         textNotFinished = transform.Find("TopSection/TextGroup/TextNotFinished").GetComponent<Text>();
@@ -115,6 +117,7 @@ public class PnlHome : MonoBehaviour
                 buttonList.Add(button);
             }
         }
+        imageList.Add(topSection);
         ThemeManager.Instance.ChangeImageStyle(imageList.ToArray());
         ThemeManager.Instance.ChangeButtonStyle(buttonList.ToArray());
         ThemeManager.Instance.ChangeToggleStyle(toggleList.ToArray());
@@ -232,10 +235,11 @@ public class PnlHome : MonoBehaviour
     void ShowOrHideFinishedItem()
     {
         isItemShow = !isItemShow;
+        float alpha = isItemShow ? 0.5f : 0;
 
         for(int i = btnFinished.transform.GetSiblingIndex() + 1; i < content.transform.childCount; i++)
         {
-            content.transform.GetChild(i).gameObject.SetActive(isItemShow);
+            content.transform.GetChild(i).GetComponent<CanvasGroup>().alpha = alpha;
         }
     }
 
