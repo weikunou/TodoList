@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 4229769769
+CRC: 3005702071
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: fb4232e3f99af02b947d734198157e12
+    Hash: 36f9439f70bc9732ca9b15a208bab727
   TypeTreeHash:
     serializedVersion: 2
     Hash: 0d677c6dec2405a43fe6dd294cca7c3e
@@ -17,28 +17,36 @@ ClassTypes:
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
-- Assets/RawAssets/Sprites/head.jpg
-- Assets/RawAssets/Sprites/icon_home_active_common.png
+- Assets/RawAssets/Texture/head.jpg
+- Assets/RawAssets/Sprites/icon_self_active_green.png
+- Assets/RawAssets/Sprites/icon_home_active_grey.png
 - Assets/RawAssets/Sprites/popup_blue.png
-- Assets/RawAssets/Sprites/popup_common.png
+- Assets/RawAssets/Sprites/popup_grey.png
 - Assets/RawAssets/Sprites/icon_home_active_blue.png
-- Assets/RawAssets/Sprites/popup_pink.png
+- Assets/RawAssets/Sprites/icon_self_inactive_green.png
 - Assets/RawAssets/Sprites/icon_home_active_pink.png
-- Assets/RawAssets/Sprites/icon_self_inactive_common.png
+- Assets/RawAssets/Sprites/icon_self_inactive_grey.png
 - Assets/RawAssets/Sprites/icon_self_active_pink.png
-- Assets/RawAssets/Sprites/icon_self_active_common.png
+- Assets/RawAssets/Sprites/popup_green.png
+- Assets/RawAssets/Sprites/icon_self_active_grey.png
+- Assets/GameRes/Atlas/Texture.spriteatlas
 - Assets/RawAssets/Sprites/icon_self_active_blue.png
+- Assets/RawAssets/Sprites/popup_pink.png
 - Assets/RawAssets/Sprites/button_add_pink.png
 - Assets/RawAssets/Sprites/icon_self_inactive_pink.png
 - Assets/RawAssets/Sprites/button_pink.png
-- Assets/RawAssets/Sprites/banner.jpg
-- Assets/RawAssets/Sprites/button_common.png
+- Assets/RawAssets/Texture/banner.jpg
+- Assets/RawAssets/Sprites/button_grey.png
+- Assets/RawAssets/Sprites/icon_home_inactive_green.png
+- Assets/RawAssets/Sprites/button_green.png
+- Assets/RawAssets/Sprites/icon_home_active_green.png
 - Assets/RawAssets/Sprites/icon_home_inactive_pink.png
 - Assets/RawAssets/Sprites/icon_home_inactive_blue.png
 - Assets/GameRes/Atlas/UI.spriteatlas
 - Assets/RawAssets/Sprites/button_blue.png
-- Assets/RawAssets/Sprites/button_add_common.png
+- Assets/RawAssets/Sprites/button_add_grey.png
+- Assets/RawAssets/Sprites/button_add_green.png
 - Assets/RawAssets/Sprites/icon_self_inactive_blue.png
 - Assets/RawAssets/Sprites/button_add_blue.png
-- Assets/RawAssets/Sprites/icon_home_inactive_common.png
+- Assets/RawAssets/Sprites/icon_home_inactive_grey.png
 Dependencies: []
