@@ -9,11 +9,11 @@ public static class EventHandler
         AddNewItemEvent?.Invoke(text);
     }
 
-    public static event Action<string> ModifyItemEvent;
+    public static event Action<int, string> ModifyItemEvent;
 
-    public static void CallModifyItemEvent(string text)
+    public static void CallModifyItemEvent(int id, string text)
     {
-        ModifyItemEvent?.Invoke(text);
+        ModifyItemEvent?.Invoke(id, text);
     }
 
     public static event Action<string, string> ModifyInfoEvent;
@@ -28,5 +28,12 @@ public static class EventHandler
     public static void CallModifyColorThemeEvent(string colorTheme)
     {
         ModifyColorThemeEvent?.Invoke(colorTheme);
+    }
+
+    public static event Action<int> UpdateHomeDataEvent;
+
+    public static void CallUpdateHomeDataEvent(int count)
+    {
+        UpdateHomeDataEvent?.Invoke(count);
     }
 }

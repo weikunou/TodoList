@@ -8,17 +8,15 @@ public class PnlHome : MonoBehaviour
 {
     Image topSection;
     Text textHistory, textToday, textNotFinished;
-    Button btnAdd, btnSettings, btnFinished;
-    
+    Button btnAdd, btnSettings, btnNotFinished, btnFinished;
+    LoopScroll loopScroll;
 
     Transform content;
     GameObject itemPrefab;
     GameObject selectedItem;
 
     int id;
-    int count;
-    bool isItemShow = true;
-    
+    bool finishedTag = false;
 
     private void Awake()
     {
@@ -26,24 +24,25 @@ public class PnlHome : MonoBehaviour
         textHistory = transform.Find("TopSection/TextGroup/TextHistory").GetComponent<Text>();
         textToday = transform.Find("TopSection/TextGroup/TextToday").GetComponent<Text>();
         textNotFinished = transform.Find("TopSection/TextGroup/TextNotFinished").GetComponent<Text>();
-        btnFinished = transform.Find("MiddleSection/Scroll View/Viewport/Content/BtnFinished").GetComponent<Button>();
+        
+        btnNotFinished = transform.Find("TopSection/BtnGroup/BtnNotFinished").GetComponent<Button>();
+        btnFinished = transform.Find("TopSection/BtnGroup/BtnFinished").GetComponent<Button>();
         
         btnAdd = transform.Find("BtnAdd").GetComponent<Button>();
         
-
+        loopScroll = transform.Find("MiddleSection/Scroll View").GetComponent<LoopScroll>();
         content = transform.Find("MiddleSection/Scroll View/Viewport/Content");
+
+        btnNotFinished.onClick.AddListener(()=>{ finishedTag = false; RefreshNotFinished(); });
+        btnFinished.onClick.AddListener(()=>{ finishedTag = true; RefreshFinished(); });
     }
 
     private void Start()
     {
         btnAdd.onClick.AddListener(()=>{ OpenNewItem(); });
-        
-        btnFinished.onClick.AddListener(()=>{ ShowOrHideFinishedItem(); });
-        
-
         itemPrefab = ResManager.Instance.LoadRes<GameObject>("ui", "Item");
         id = PlayerPrefs.GetInt("ID", 0);
-        ReadDataFromAllItem();
+        OnUpdateHomeDataEvent(0);
         OnModifyColorThemeEvent("");
     }
 
@@ -52,6 +51,7 @@ public class PnlHome : MonoBehaviour
         EventHandler.AddNewItemEvent += OnAddNewItemEvent;
         EventHandler.ModifyItemEvent += OnModifyItemEvent;
         EventHandler.ModifyColorThemeEvent += OnModifyColorThemeEvent;
+        EventHandler.UpdateHomeDataEvent += OnUpdateHomeDataEvent;
     }
 
     private void OnDisable()
@@ -59,6 +59,7 @@ public class PnlHome : MonoBehaviour
         EventHandler.AddNewItemEvent -= OnAddNewItemEvent;
         EventHandler.ModifyItemEvent -= OnModifyItemEvent;
         EventHandler.ModifyColorThemeEvent -= OnModifyColorThemeEvent;
+        EventHandler.UpdateHomeDataEvent -= OnUpdateHomeDataEvent;
     }
 
     private void OpenNewItem()
@@ -71,32 +72,27 @@ public class PnlHome : MonoBehaviour
         id++;
         PlayerPrefs.SetInt("ID", id);
         string now = DateTime.Now.ToString();
-
-        CreateItem(id, text, now, false);
-
         // 添加数据
         DataManager.Instance.AddItemData(id, text, false, now, now, "");
-
-        int historyCount = DataManager.Instance.allItem.items.Count;
-        textHistory.text = $"历史 {historyCount} 件事";
-
-        int notfinishedCount = DataManager.Instance.CountNotFinished();
-        textNotFinished.text = $"待完成 {notfinishedCount} 件事";
+        OnUpdateHomeDataEvent(0);
     }
 
-    private void OnModifyItemEvent(string text)
+    private void OnModifyItemEvent(int id, string text)
     {
-        Text itemText = selectedItem.transform.Find("TextButton/Text").GetComponent<Text>();
-        itemText.text = text;
-        Text idText = selectedItem.transform.Find("IDText").GetComponent<Text>();
-        Toggle toggleButton = selectedItem.transform.Find("Toggle").GetComponent<Toggle>();
-        DataManager.Instance.ModifyItemData(int.Parse(idText.text), text, toggleButton.isOn,
-            DateTime.Now.ToString(), DateTime.Now.ToString());
+        DataManager.Instance.ModifyItemDataOnlyContent(id, text);
+        if(finishedTag)
+        {
+            RefreshFinished();
+        }
+        else
+        {
+            RefreshNotFinished();
+        }
     }
 
     private void OnModifyColorThemeEvent(string colorTheme)
     {
-        Button[] buttons = new Button[]{ btnFinished };
+        Button[] buttons = new Button[]{ btnNotFinished, btnFinished };
         ThemeManager.Instance.ChangeButtonStyle(buttons);
         ThemeManager.Instance.ChangeBtnAddStyle(btnAdd);
         List<Image> imageList = new List<Image>();
@@ -123,138 +119,34 @@ public class PnlHome : MonoBehaviour
         ThemeManager.Instance.ChangeToggleStyle(toggleList.ToArray());
     }
 
-    private void CreateItem(int id, string text, string date, bool isFinished)
+    private void OnUpdateHomeDataEvent(int count)
     {
-        // 实例化事项，并添加到滚动视图中
-        GameObject item = Instantiate(itemPrefab, content.transform);
-        item.name = "Item";
-        item.transform.SetAsFirstSibling();
-
-        // 修改事项 ID
-        Text idText = item.transform.Find("IDText").GetComponent<Text>();
-        idText.text = id.ToString();
-
-        // 修改事项文本
-        Text itemText = item.transform.Find("TextButton/Text").GetComponent<Text>();
-        itemText.text = text;
-
-        // 修改事项时间文本
-        Text itemDateText = item.transform.Find("TextButton/DateText").GetComponent<Text>();
-        itemDateText.text = date;
-
-        // 修改事项文本按钮
-        Button textButton = item.transform.Find("TextButton").GetComponent<Button>();
-        textButton.onClick.AddListener(delegate
-        {
-            selectedItem = item;
-            UIManager.Instance.CreatePanel(EnumType.UIPanel.PnlModifyItem, UIManager.Instance.TopCanvas);
-            GameObject obj = UIManager.Instance.GetPanel(EnumType.UIPanel.PnlModifyItem);
-            obj.transform.GetComponent<PnlModifyItem>().UpdateInput(itemText.text);
-        });
-
-        // 修改开关
-        Toggle toggleButton = item.transform.Find("Toggle").GetComponent<Toggle>();
-        toggleButton.onValueChanged.AddListener(delegate
-        {
-            if (toggleButton.isOn)
-            {
-                FinishItem(item);
-
-                // 修改数据
-                DataManager.Instance.ModifyItemData(int.Parse(idText.text), itemText.text, true,
-                    DateTime.Now.ToString(), DateTime.Now.ToString());
-            }
-            else
-            {
-                RecoverItem(item);
-
-                // 修改数据
-                DataManager.Instance.ModifyItemData(int.Parse(idText.text), itemText.text, false,
-                    DateTime.Now.ToString(), DateTime.Now.ToString());
-            }
-            int notfinishedCount = DataManager.Instance.CountNotFinished();
-            textNotFinished.text = $"待完成 {notfinishedCount} 件事";
-        });
-
-        toggleButton.isOn = isFinished;
-
-        string str = date.Substring(0, date.Length - 9);
-        string now = DateTime.Now.ToString();
-
-        // 修改删除按钮
-        Button deleteButton = item.transform.Find("DeleteButton").GetComponent<Button>();
-        deleteButton.onClick.AddListener(delegate
-        {
-            DataManager.Instance.DeleteItemData(int.Parse(idText.text), itemText.text, false);
-
-            int historyCount = DataManager.Instance.allItem.items.Count;
-            textHistory.text = $"历史 {historyCount} 件事";
-
-            int notfinishedCount = DataManager.Instance.CountNotFinished();
-            textNotFinished.text = $"待完成 {notfinishedCount} 件事";
-
-            if (now.Contains(str))
-            {
-                count--;
-                textToday.text = $"今天 {count} 件事";
-            }
-            
-            Destroy(item);
-        });
-
-        if (now.Contains(str))
-        {
-            // 修改事项数量
-            count++;
-            textToday.text = $"今天 {count} 件事";
-        }
-    }
-
-    /// <summary>
-    /// 完成事项
-    /// </summary>
-    void FinishItem(GameObject item)
-    {
-        item.transform.SetSiblingIndex(btnFinished.transform.GetSiblingIndex());
-        item.SetActive(isItemShow);
-        item.GetComponent<CanvasGroup>().alpha = 0.5f;
-    }
-
-    /// <summary>
-    /// 恢复事项
-    /// </summary>
-    void RecoverItem(GameObject item)
-    {
-        item.transform.SetSiblingIndex(btnFinished.transform.GetSiblingIndex());
-        item.GetComponent<CanvasGroup>().alpha = 1;
-    }
-
-    /// <summary>
-    /// 显示或隐藏已完成的事项
-    /// </summary>
-    void ShowOrHideFinishedItem()
-    {
-        isItemShow = !isItemShow;
-
-        for(int i = btnFinished.transform.GetSiblingIndex() + 1; i < content.transform.childCount; i++)
-        {
-            content.transform.GetChild(i).gameObject.SetActive(isItemShow);
-        }
-    }
-
-    /// <summary>
-    /// 从 allItem 里读取事项
-    /// </summary>
-    void ReadDataFromAllItem()
-    {
-        foreach(Item child in DataManager.Instance.allItem.items)
-        {
-            CreateItem(child.itemID, child.itemContent, child.itemCreatedDate, child.isFinished);
-        }
-
         int historyCount = DataManager.Instance.allItem.items.Count;
         textHistory.text = $"历史 {historyCount} 件事";
+
         int notfinishedCount = DataManager.Instance.CountNotFinished();
         textNotFinished.text = $"待完成 {notfinishedCount} 件事";
+
+        int todayCount = DataManager.Instance.CountToday();
+        textToday.text = $"今天 {todayCount} 件事";
+
+        if(finishedTag)
+        {
+            RefreshFinished();
+        }
+        else
+        {
+            RefreshNotFinished();
+        }
+    }
+
+    private void RefreshNotFinished()
+    {
+        loopScroll.Refresh(DataManager.Instance.notFinishedItems);
+    }
+
+    private void RefreshFinished()
+    {
+        loopScroll.Refresh(DataManager.Instance.finishedItems);
     }
 }

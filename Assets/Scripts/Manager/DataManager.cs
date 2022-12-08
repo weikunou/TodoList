@@ -14,6 +14,9 @@ public class DataManager : Singleton<DataManager>
     /// </summary>
     public AllItem allItem = new AllItem();
 
+    public List<Item> notFinishedItems = new List<Item>();
+    public List<Item> finishedItems = new List<Item>();
+
     /// <summary>
     /// 保存的 json
     /// </summary>
@@ -57,6 +60,7 @@ public class DataManager : Singleton<DataManager>
         itemData.itemFinishedDate = itemFinishedDate;
 
         allItem.items.Add(itemData);
+        SplitItemList();
 
         json = JsonUtility.ToJson(allItem);
         WriteJson();
@@ -93,15 +97,36 @@ public class DataManager : Singleton<DataManager>
         WriteJson();
     }
 
-    /// <summary>
-    /// 删除事项数据
-    /// </summary>
-    /// <param name="itemID">事项 ID</param>
-    /// <param name="itemContent">事项 内容</param>
-    /// <param name="itemStatus">事项 状态</param>
-    public void DeleteItemData(int itemID, string itemContent, bool itemStatus)
+    public void ModifyItemDataOnlyContent(int id, string content)
     {
         for(int i = 0; i < allItem.items.Count; i++)
+        {
+            if(allItem.items[i].itemID == id)
+            {
+                allItem.items[i].itemContent = content;
+            }
+        }
+        json = JsonUtility.ToJson(allItem);
+        WriteJson();
+    }
+
+    public void ModifyItemDataOnlyFinished(int id, bool isFinished)
+    {
+        for(int i = 0; i < allItem.items.Count; i++)
+        {
+            if(allItem.items[i].itemID == id)
+            {
+                allItem.items[i].isFinished = isFinished;
+            }
+        }
+        SplitItemList();
+        json = JsonUtility.ToJson(allItem);
+        WriteJson();
+    }
+
+    public void DeleteItemData(int itemID)
+    {
+        for(int i = allItem.items.Count - 1; i >= 0; i--)
         {
             // 找到相同 ID 的事项数据
             if (allItem.items[i].itemID == itemID)
@@ -109,7 +134,7 @@ public class DataManager : Singleton<DataManager>
                 allItem.items.Remove(allItem.items[i]);
             }
         }
-
+        SplitItemList();
         json = JsonUtility.ToJson(allItem);
         WriteJson();
     }
@@ -125,6 +150,22 @@ public class DataManager : Singleton<DataManager>
             }
         }
         return notFinishedCount;
+    }
+
+    public int CountToday()
+    {
+        int todayCount = 0;
+        string now = DateTime.Now.ToString();
+        for(int i = 0; i < allItem.items.Count; i++)
+        {
+            string date = allItem.items[i].itemCreatedDate;
+            string str = date.Substring(0, date.Length - 9);
+            if (now.Contains(str))
+            {
+                todayCount++;
+            }
+        }
+        return todayCount;
     }
 
     /// <summary>
@@ -156,6 +197,25 @@ public class DataManager : Singleton<DataManager>
     public void TransformToAllItem()
     {
         allItem = JsonUtility.FromJson<AllItem>(json);
+        SplitItemList();
+    }
+
+    public void SplitItemList()
+    {
+        notFinishedItems.Clear();
+        finishedItems.Clear();
+        int sum = allItem.items.Count - 1;
+        for(int i = sum; i >= 0; i--)
+        {
+            if(allItem.items[i].isFinished)
+            {
+                finishedItems.Add(allItem.items[i]);
+            }
+            else
+            {
+                notFinishedItems.Add(allItem.items[i]);
+            }
+        }
     }
 }
 

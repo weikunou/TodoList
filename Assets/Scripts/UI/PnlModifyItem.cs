@@ -10,6 +10,8 @@ public class PnlModifyItem : MonoBehaviour
     InputField inputField;
     Button btnCancel, btnConfirm;
 
+    int id;
+
     private void Awake()
     {
         popup = transform.Find("Popup").GetComponent<Image>();
@@ -44,9 +46,10 @@ public class PnlModifyItem : MonoBehaviour
         ThemeManager.Instance.ChangeButtonStyle(buttons);
     }
 
-    public void UpdateInput(string text)
+    public void UpdateInput(int id, string text)
     {
         inputField.text = text;
+        this.id = id;
     }
 
     private void ModifyItem()
@@ -58,8 +61,7 @@ public class PnlModifyItem : MonoBehaviour
             return;
         }
 
-        // 触发添加待办事项事件
-        EventHandler.CallModifyItemEvent(inputField.text);
+        EventHandler.CallModifyItemEvent(this.id, inputField.text);
         EventHandler.CallModifyColorThemeEvent("");
 
         // 关闭弹窗
