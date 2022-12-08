@@ -53,8 +53,10 @@ SpriteAtlas:
   m_PackedSprites:
   - {fileID: 21300000, guid: a8cf83309900c554c92d968652e97b36, type: 3}
   - {fileID: 21300000, guid: 1b78c6409fc677f4da5475b4ce82def6, type: 3}
+  - {fileID: 21300000, guid: 45f98b406fda60f41828e9dd2b406d2d, type: 3}
   - {fileID: 21300000, guid: c9b12350e4e26b94ea5702f937599d25, type: 3}
   - {fileID: 21300000, guid: 20ce2a91431ee764ea59e377053b664c, type: 3}
+  - {fileID: 21300000, guid: 6b019732391dd45468543785ab00246a, type: 3}
   - {fileID: 21300000, guid: fa6995c27fa157e489cea529d60a8851, type: 3}
   - {fileID: 21300000, guid: 38a236c22f30a424e91ea807a4738364, type: 3}
   - {fileID: 21300000, guid: 212687e2b1fff5f429e1abeb345c2823, type: 3}
@@ -63,13 +65,17 @@ SpriteAtlas:
   - {fileID: 21300000, guid: e0c81bb3397fc4b4fa316981eac1e7f5, type: 3}
   - {fileID: 21300000, guid: d90193e30e2a23a409544d2e62afc097, type: 3}
   - {fileID: 21300000, guid: 2e19c3e3460549a48a35448a0e75cd43, type: 3}
+  - {fileID: 21300000, guid: eee7cc9632b8d99428ddc190bcced381, type: 3}
   - {fileID: 21300000, guid: 8de1101712a99a84ebe965edb6813d22, type: 3}
+  - {fileID: 21300000, guid: b1dc4c4796648c5499fb7650db3c03c6, type: 3}
   - {fileID: 21300000, guid: 2d2b38a704fc5e04f989f308b7778662, type: 3}
   - {fileID: 21300000, guid: 9f1e9158d9ef67e488d3bb633140dfad, type: 3}
   - {fileID: 21300000, guid: c26c9f29f63b71146a3876b23657133d, type: 3}
   - {fileID: 21300000, guid: 843290594f6fedd41aecab97ff3d0ab2, type: 3}
+  - {fileID: 21300000, guid: 4825547ab6ee39941bce0b460b906bc8, type: 3}
   - {fileID: 21300000, guid: 18fcabbab773dd14b84451620329430e, type: 3}
   - {fileID: 21300000, guid: f92f027b4f4bc6a44a92228e782532f9, type: 3}
+  - {fileID: 21300000, guid: c9bb81bbda25b5b469e1b92be4aa4658, type: 3}
   - {fileID: 21300000, guid: 4bb7033c6c35c7c4a9fa4e5ea878b283, type: 3}
   - {fileID: 21300000, guid: af08854c82690214c806deab1872dcf8, type: 3}
   - {fileID: 21300000, guid: 34dd287c8fe31b840b9e2e74ed5ca33b, type: 3}
@@ -78,12 +84,16 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 1411cb5e2dddb9c41a31ee89c75bc5af, type: 3}
   - {fileID: 21300000, guid: 511b0cbeb30844b4ca1fa680bef23a4d, type: 3}
   - {fileID: 21300000, guid: f07a1dee3a71ba941b535b5295204fc6, type: 3}
+  - {fileID: 21300000, guid: c7d5d60f1dec36b4c961acf6eec5f127, type: 3}
+  - {fileID: 21300000, guid: a2e52e7f59baf204885fb1890bb0c0de, type: 3}
   - {fileID: 21300000, guid: d57ac8bf7e3daa54290567780e0fc76f, type: 3}
   m_PackedSpriteNamesToIndex:
   - icon_home_active_pink
   - button_pink
+  - icon_shop_inactive_pink
   - icon_self_inactive_pink
   - popup_blue
+  - icon_shop_active_grey
   - icon_home_inactive_grey
   - icon_home_active_grey
   - icon_home_active_blue
@@ -92,13 +102,17 @@ SpriteAtlas:
   - button_green
   - popup_grey
   - icon_self_active_grey
+  - icon_shop_active_pink
   - popup_green
+  - icon_shop_inactive_blue
   - icon_self_inactive_green
   - icon_self_active_pink
   - button_add_green
   - button_blue
+  - icon_shop_active_green
   - button_add_pink
   - button_add_blue
+  - icon_shop_inactive_grey
   - icon_self_inactive_grey
   - icon_home_inactive_green
   - button_add_grey
@@ -107,6 +121,8 @@ SpriteAtlas:
   - icon_home_inactive_pink
   - icon_self_active_green
   - button_grey
+  - icon_shop_inactive_green
+  - icon_shop_active_blue
   - icon_self_inactive_blue
   m_RenderDataMap: {}
   m_Tag: UI
