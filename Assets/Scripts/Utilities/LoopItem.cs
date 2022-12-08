@@ -73,6 +73,6 @@ public class LoopItem : MonoBehaviour
         {
             current_height = min_height;
         }
-        m_rect.sizeDelta = new Vector2(0, current_height);
+        m_rect.sizeDelta = new Vector2(-padding * 2, current_height);
     }
 }

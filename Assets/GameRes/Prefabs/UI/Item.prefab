@@ -341,6 +341,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   min_height: 140
   padding: 40
+  id: 0
 --- !u!1 &5901247833262967114
 GameObject:
   m_ObjectHideFlags: 0

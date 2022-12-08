@@ -46,6 +46,9 @@ public class LoopScroll : MonoBehaviour
     /// </summary>
     public int extra;
 
+    public float space;
+    public float top;
+
     public void Init()
     {
         float viewport_height = scrollRect.viewport.rect.height;
@@ -116,8 +119,7 @@ public class LoopScroll : MonoBehaviour
     public void CountItemPos()
     {
         // 计算 item 位置
-        float pos = 0;
-        float space = 20; // 间隔
+        float pos = top;
 
         int currentItem = headItem; // 从头节点的位置开始
         for(int i = headData; i <= tailData; i++)
@@ -192,9 +194,6 @@ public class LoopScroll : MonoBehaviour
             // 先获取尾节点的 y 坐标位置
             float pos_y = itemList[tailItem].anchoredPosition.y;
 
-            // 节点间隔，后续可以改成全局变量设置
-            float space = 20;
-
             // 调整一下代码的执行顺序，要在计算 pos_y 之前，先更新 Item 高度
             itemList[headItem].GetComponent<LoopItem>().UpdateSelf(dataList[tailData]);
 
@@ -231,9 +230,6 @@ public class LoopScroll : MonoBehaviour
 
             // 先获取头节点的 y 坐标位置
             float pos_y = itemList[headItem].anchoredPosition.y;
-
-            // 节点间隔，后续可以改成全局变量设置
-            float space = 20;
 
             // 调整一下代码的执行顺序，要在 Item 高度更新之前，先减去原来的高度
             // content 高度减少一个尾节点高度和间隔
